@@ -10,7 +10,7 @@ import json
 from langchain_core.tools import tool
 
 
-# 模拟客户数据：作品集阶段先用固定数据展示工具调用链路
+# 模拟客户数据：当前阶段先用固定数据展示工具调用链路
 CUSTOMERS = {
     "user-001": {
         "user_id": "user-001",

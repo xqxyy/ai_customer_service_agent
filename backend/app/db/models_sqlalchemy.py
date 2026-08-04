@@ -33,7 +33,7 @@ class Message(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
 
-# 回答引用来源表：保存某次 AI 回复引用了哪些 RAG 文档，用于 Trace、评估和面试展示
+# 回答引用来源表：保存某次 AI 回复引用了哪些 RAG 文档，用于 Trace、评估和页面展示
 class MessageSource(Base):
     __tablename__ = "message_sources"
 
