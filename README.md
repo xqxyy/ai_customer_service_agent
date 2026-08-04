@@ -18,7 +18,7 @@
   -> 前端工作台展示聊天、工单、知识库和 Trace
 ```
 
-这个项目的重点不是“模型回答得像不像人”，而是展示一个 AI Agent 项目从学习 Demo 到工程化作品的过程：有工具、有知识库、有数据库、有人工审核边界、有故障降级、有评估脚本、有前端展示。
+这个项目是一个 AI Agent 从学习 Demo 到工程化作品的过程：有工具、有知识库、有数据库、有人工审核边界、有故障降级、有评估脚本、有前端展示。
 
 ---
 
@@ -38,53 +38,6 @@
 | 前端工作台 | 浏览器展示聊天、工单、知识库、Agent 调用过程和评估入口 |
 | 评估脚本 | RAG eval 和 Agent eval，检查命中、工具调用、状态和引用来源 |
 
-当前数据规模：
-
-```text
-data/knowledge_base/sources.json：23 条知识源
-data/processed/documents.jsonl：23 条标准文档
-data/processed/chunks.jsonl：48 个知识切块
-data/processed/ocr_texts：4 份 OCR 文本
-data/eval/rag_eval.json：24 条 RAG 评估用例
-backend/app/data/eval/customer_service_eval.json：30 条 Agent 评估用例
-```
-
----
-
-## 技术栈
-
-后端：
-
-```text
-Python
-FastAPI
-Pydantic
-LangChain
-DeepSeek Chat Model
-SQLAlchemy
-Alembic
-PostgreSQL / SQLite
-```
-
-RAG：
-
-```text
-SiliconFlow Embedding
-BAAI/bge-m3
-Milvus
-LangChain Text Splitter
-pypdf
-PaddleOCR
-```
-
-前端：
-
-```text
-HTML
-CSS
-JavaScript
-FastAPI static files
-```
 
 ---
 
@@ -145,18 +98,7 @@ migrations/
 
 ## 模块演进说明
 
-### 1. 后端入口：从脚本到 FastAPI 服务
-
-最开始只是学习 LangChain 和工具调用，可以在 Python 脚本里直接调用 Agent。
-
-后来为什么升级：
-
-```text
-作品集项目需要可展示、可调用、可联调。
-如果只有命令行脚本，无法展示 API、前端工作台、健康检查、Trace 查询。
-```
-
-现在怎么改进：
+### 1. 后端入口： FastAPI 
 
 ```text
 backend/app/main.py
