@@ -1,0 +1,9 @@
+本目录由 Alembic 使用，负责管理数据库迁移脚本
+
+常用命令：
+
+python -m alembic revision --autogenerate -m "描述本次表结构变化"
+python -m alembic upgrade head
+python -m alembic downgrade -1
+
+env.py 会从 backend.app.core.config 读取 DATABASE_URL，并加载 SQLAlchemy ORM 元数据

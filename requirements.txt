@@ -1,0 +1,37 @@
+# 项目运行依赖：FastAPI 后端、LangChain Agent、RAG、OCR、数据库和迁移工具。
+
+# FastAPI Web 服务和本地开发服务器。
+fastapi==0.135.1
+uvicorn[standard]==0.46.0
+python-dotenv==1.2.1
+
+# Pydantic 配置和接口数据模型。
+pydantic==2.12.5
+pydantic-settings==2.12.0
+
+# LangChain Agent、DeepSeek 模型适配和文本切分。
+langchain==1.2.12
+langchain-core==1.2.18
+langchain-openai==1.1.11
+langchain-deepseek==1.0.1
+langchain-text-splitters==1.1.1
+openai==2.26.0
+
+# Milvus 向量数据库客户端和终端调试输出。
+pymilvus==2.6.12
+rich==14.3.3
+
+# 普通 PDF 文本提取。
+pypdf
+
+# 扫描 PDF 离线 OCR。
+paddleocr
+
+# 数据库访问层和 ORM
+SQLAlchemy
+
+# 数据库迁移工具，管理 CREATE TABLE、ALTER TABLE 等结构变更。
+alembic
+
+# PostgreSQL 驱动
+psycopg2-binary

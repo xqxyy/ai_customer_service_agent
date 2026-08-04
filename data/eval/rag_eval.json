@@ -1,0 +1,146 @@
+[
+  {
+    "id": "rag_refund_001",
+    "question": "退款审核通过后多久可以到账？",
+    "expected_doc_ids": ["refund_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_refund_002",
+    "question": "订单已经发货了，我想退款应该怎么处理？",
+    "expected_doc_ids": ["refund_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_return_001",
+    "question": "签收 7 天内发现质量问题可以退换货吗？",
+    "expected_doc_ids": ["return_exchange_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_return_002",
+    "question": "商品缺少配件还能申请退货吗？",
+    "expected_doc_ids": ["return_exchange_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_shipping_001",
+    "question": "普通商品付款成功后多久发货？",
+    "expected_doc_ids": ["shipping_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_shipping_002",
+    "question": "发货后在哪里查看快递单号和物流节点？",
+    "expected_doc_ids": ["shipping_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_delivery_exception_001",
+    "question": "包裹发出后超过 72 小时没有更新物流怎么办？",
+    "expected_doc_ids": ["delivery_exception_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_delivery_exception_002",
+    "question": "派送失败通常是什么原因？",
+    "expected_doc_ids": ["delivery_exception_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_warranty_001",
+    "question": "商品一年内出现非人为质量问题能保修吗？",
+    "expected_doc_ids": ["warranty_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_warranty_002",
+    "question": "哪些情况不属于免费保修范围？",
+    "expected_doc_ids": ["warranty_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_invoice_001",
+    "question": "电子发票一般多久可以开具？",
+    "expected_doc_ids": ["invoice_policy", "invoice_policy_pdf"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_payment_001",
+    "question": "支付失败可能是什么原因？",
+    "expected_doc_ids": ["payment_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_coupon_001",
+    "question": "订单退款后优惠券会退回来吗？",
+    "expected_doc_ids": ["coupon_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_membership_001",
+    "question": "会员等级通常根据哪些因素计算？",
+    "expected_doc_ids": ["membership_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_account_001",
+    "question": "账号被盗或异常登录需要怎么核验？",
+    "expected_doc_ids": ["account_security_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_privacy_001",
+    "question": "用户投诉隐私泄露时应该怎么处理？",
+    "expected_doc_ids": ["privacy_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_complaint_001",
+    "question": "用户提出赔偿和律师介入时客服能直接承诺结果吗？",
+    "expected_doc_ids": ["complaint_policy", "manual_review_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_order_cancel_001",
+    "question": "未发货订单可以取消吗？",
+    "expected_doc_ids": ["order_cancellation_policy", "faq_order_after_sales"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_order_change_001",
+    "question": "订单发货后还能修改收货地址吗？",
+    "expected_doc_ids": ["order_change_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_ocr_delivery_001",
+    "question": "冷链商品到货温度异常需要多久内提交照片？",
+    "expected_doc_ids": ["delivery_exception_scan"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_ocr_payment_001",
+    "question": "第三方支付扣款成功但订单没生成，需要提供什么材料？",
+    "expected_doc_ids": ["payment_dispute_scan"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_ocr_privacy_001",
+    "question": "用户申请删除个人信息或导出数据时需要先做什么？",
+    "expected_doc_ids": ["privacy_request_scan"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_unknown_001",
+    "question": "你们能帮我安装电脑系统吗？",
+    "expected_doc_ids": [],
+    "should_hit": false
+  },
+  {
+    "id": "rag_unknown_002",
+    "question": "你们可以帮我推荐一套游戏电脑配置吗？",
+    "expected_doc_ids": [],
+    "should_hit": false
+  }
+]

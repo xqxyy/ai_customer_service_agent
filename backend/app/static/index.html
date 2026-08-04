@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>智能客服工作台</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <!-- 应用外壳：左侧导航 + 右侧工作区。 -->
+    <div class="app-shell">
+      <!-- 侧边导航：用于在会话、工单、知识库和评估视图之间切换。 -->
+      <aside class="sidebar" aria-label="工作台导航">
+        <div class="brand-mark">AI</div>
+        <button class="nav-button active" data-view="conversation" title="会话">会话</button>
+        <button class="nav-button" data-view="tickets" title="工单">工单</button>
+        <button class="nav-button" data-view="knowledge" title="知识库">知识库</button>
+        <button class="nav-button" data-view="evals" title="评估">评估</button>
+      </aside>
+
+      <!-- 主工作区：展示顶部状态、会话筛选和各业务面板。 -->
+      <main class="workspace">
+        <!-- 顶部栏：显示产品名、API 状态和 Swagger 入口。 -->
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Customer service agent</p>
+            <h1>智能客服工作台</h1>
+          </div>
+          <div class="topbar-actions">
+            <span class="status-pill" id="apiStatus">API 检查中</span>
+            <span class="status-pill muted">Milvus RAG</span>
+            <a class="docs-link" href="/docs" target="_blank" rel="noreferrer">OpenAPI</a>
+          </div>
+        </header>
+
+        <!-- 会话控制条：选择 session/user，并提供常用演示问题。 -->
+        <section class="control-strip" aria-label="会话设置">
+          <label>
+            <span>Session</span>
+            <input id="sessionId" value="demo_session" />
+          </label>
+          <label>
+            <span>User</span>
+            <input id="userId" value="user-001" />
+          </label>
+          <div class="quick-actions" aria-label="快速问题">
+            <button data-question="退款一般多久到账？">退款到账</button>
+            <button data-question="我的订单到哪了？">订单物流</button>
+            <button data-question="我要投诉并要求赔偿">人工审核</button>
+          </div>
+        </section>
+
+        <!-- 内容网格：各面板通过 data-panel 标识，CSS 根据 data-view 控制显示方式。 -->
+        <section class="grid" id="workspaceGrid" data-view="conversation">
+          <!-- 聊天面板：显示当前会话消息，并提供发送输入框。 -->
+          <section class="panel chat-panel" data-panel="conversation" aria-label="聊天窗口">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Chat</p>
+                <h2>聊天窗口</h2>
+              </div>
+              <button class="ghost-button" id="refreshButton">刷新</button>
+            </div>
+
+            <div class="chat-stream" id="chatStream"></div>
+
+            <form class="composer" id="chatForm">
+              <textarea
+                id="messageInput"
+                rows="3"
+                placeholder="输入客户问题"
+                required
+              ></textarea>
+              <button class="send-button" type="submit">
+                <span>发送</span>
+                <span aria-hidden="true">↗</span>
+              </button>
+            </form>
+          </section>
+
+          <!-- Trace 面板：显示 Agent 本次和历史请求里的工具调用过程。 -->
+          <section class="panel insight-panel" data-panel="trace" aria-label="Agent 调用过程">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Trace</p>
+                <h2>Agent 调用过程</h2>
+              </div>
+              <span class="count-badge" id="toolCount">0</span>
+            </div>
+            <div class="trace-list" id="traceList"></div>
+          </section>
+
+          <!-- 知识库面板：展示 documents.jsonl 中的文档清单和内容片段。 -->
+          <section class="panel knowledge-panel" data-panel="knowledge" aria-label="知识库列表">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">RAG</p>
+                <h2>知识库列表</h2>
+              </div>
+              <span class="count-badge" id="docCount">0</span>
+            </div>
+            <div class="knowledge-list" id="knowledgeList"></div>
+          </section>
+
+          <!-- 工单面板：展示人工审核和普通工单，并支持状态流转。 -->
+          <section class="panel ticket-panel" data-panel="tickets" aria-label="工单列表">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Tickets</p>
+                <h2>工单列表</h2>
+              </div>
+              <span class="count-badge" id="ticketCount">0</span>
+            </div>
+            <div class="ticket-list" id="ticketList"></div>
+          </section>
+
+          <!-- 评估面板：给出 Agent 评估脚本入口和当前评估维度。 -->
+          <section class="panel eval-panel" data-panel="evals" aria-label="评估面板">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Eval</p>
+                <h2>评估与观测</h2>
+              </div>
+              <span class="count-badge">3 cases</span>
+            </div>
+            <div class="eval-body">
+              <article class="eval-card">
+                <p class="item-title">评估命令</p>
+                <pre>python -m backend.app.evals.run_customer_service_eval</pre>
+              </article>
+              <article class="eval-card">
+                <p class="item-title">当前评估维度</p>
+                <ul>
+                  <li>工具调用是否正确</li>
+                  <li>RAG 来源是否命中</li>
+                  <li>最终状态是否符合预期</li>
+                </ul>
+              </article>
+              <article class="eval-card">
+                <p class="item-title">测试数据</p>
+                <p class="item-body">backend/app/data/eval/customer_service_eval.json</p>
+              </article>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <!-- Toast 提示容器：由 app.js 动态写入提示文本。 -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

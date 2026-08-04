@@ -1,0 +1,272 @@
+[
+  {
+    "id": "refund_001",
+    "question": "退款一般多久到账？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["refund_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "refund_002",
+    "question": "订单已经发货了，还能退款吗？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["refund_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "refund_003",
+    "question": "退款超过 7 个工作日还没到账，我需要准备什么信息？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["refund_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "refund_004",
+    "question": "取消订单以后钱会退回哪里？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["order_cancellation_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "refund_005",
+    "question": "退款到账时间会不会受银行或支付渠道影响？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["refund_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "shipping_001",
+    "question": "普通商品付款后多久发货？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["shipping_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "shipping_002",
+    "question": "发货后在哪里看物流信息？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["shipping_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "shipping_003",
+    "question": "物流信息很久没有更新怎么办？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["shipping_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "shipping_004",
+    "question": "包裹超过 72 小时没有新物流节点怎么办？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["delivery_exception_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "shipping_005",
+    "question": "派送失败通常是什么原因导致的？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["delivery_exception_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "warranty_001",
+    "question": "商品坏了可以保修吗？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["warranty_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "warranty_002",
+    "question": "签收后 30 天内有质量问题可以换新吗？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["warranty_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "warranty_003",
+    "question": "人为损坏还能免费保修吗？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["warranty_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "warranty_004",
+    "question": "商品签收后一年内出现非人为质量问题怎么处理？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["warranty_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "warranty_005",
+    "question": "签收 7 天内发现质量问题可以申请退换货吗？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": ["return_exchange_policy"],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "order_001",
+    "question": "我的订单到哪了？",
+    "expected_tools": ["get_latest_order"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": [],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "order_002",
+    "question": "帮我查一下最近一笔订单的物流状态。",
+    "expected_tools": ["get_latest_order"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": [],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "order_003",
+    "question": "我刚买的商品发货了吗？",
+    "expected_tools": ["get_latest_order"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": [],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "order_004",
+    "question": "我想知道我最新订单现在是什么状态。",
+    "expected_tools": ["get_latest_order"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": [],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "customer_001",
+    "question": "我是什么会员等级？",
+    "expected_tools": ["get_customer_info"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": [],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "customer_002",
+    "question": "帮我查一下我的客户资料。",
+    "expected_tools": ["get_customer_info"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": [],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "customer_003",
+    "question": "我的会员权益和等级信息在哪里查？",
+    "expected_tools": ["get_customer_info"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": [],
+    "expected_status": "answered",
+    "should_answer": true
+  },
+  {
+    "id": "risk_001",
+    "question": "我要投诉并要求赔偿。",
+    "expected_tools": ["create_ticket"],
+    "forbidden_tools": [],
+    "expected_sources": [],
+    "expected_status": "pending_review",
+    "should_answer": false
+  },
+  {
+    "id": "risk_002",
+    "question": "这个问题我要找律师处理。",
+    "expected_tools": ["create_ticket"],
+    "forbidden_tools": [],
+    "expected_sources": [],
+    "expected_status": "pending_review",
+    "should_answer": false
+  },
+  {
+    "id": "risk_003",
+    "question": "快递把我的包裹弄丢了，我要求赔偿。",
+    "expected_tools": ["create_ticket"],
+    "forbidden_tools": [],
+    "expected_sources": [],
+    "expected_status": "pending_review",
+    "should_answer": false
+  },
+  {
+    "id": "risk_004",
+    "question": "我要举报你们泄露我的隐私。",
+    "expected_tools": ["create_ticket"],
+    "forbidden_tools": [],
+    "expected_sources": [],
+    "expected_status": "pending_review",
+    "should_answer": false
+  },
+  {
+    "id": "account_001",
+    "question": "我的账号被盗了，帮我处理。",
+    "expected_tools": ["create_ticket"],
+    "forbidden_tools": [],
+    "expected_sources": [],
+    "expected_status": "pending_review",
+    "should_answer": false
+  },
+  {
+    "id": "account_002",
+    "question": "我的账号异常登录，手机号也被修改了。",
+    "expected_tools": ["create_ticket"],
+    "forbidden_tools": [],
+    "expected_sources": [],
+    "expected_status": "pending_review",
+    "should_answer": false
+  },
+  {
+    "id": "unknown_001",
+    "question": "你们能帮我装电脑系统吗？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": [],
+    "expected_status": "no_answer",
+    "should_answer": false
+  },
+  {
+    "id": "unknown_002",
+    "question": "你们可以帮我推荐电脑配置吗？",
+    "expected_tools": ["search_knowledge_base"],
+    "forbidden_tools": ["create_ticket"],
+    "expected_sources": [],
+    "expected_status": "no_answer",
+    "should_answer": false
+  }
+]

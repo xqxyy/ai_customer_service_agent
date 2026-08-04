@@ -1,0 +1,42 @@
+# Git 忽略规则：保护密钥、本地环境、数据库、缓存、日志和临时文件。
+
+# 本地真实配置和密钥。保留 .env.example 给别人参考。
+.env
+.env.*
+!.env.example
+
+# Python 虚拟环境、缓存和测试缓存。
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# 本地数据库文件。数据库结构由 Alembic 迁移脚本重建，不上传运行数据。
+*.db
+*.sqlite
+*.sqlite3
+
+# 运行日志。
+*.log
+uvicorn.out.log
+uvicorn.err.log
+
+# IDE 和系统文件。
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# 临时构建、渲染、转换产物。
+tmp/
+
+# Word 文档和 Word 打开的临时锁文件；GitHub 作品集只上传 Markdown/源码。
+*.docx
+~$*.docx
+
+# 不上传面试问答资料，它只保留在本地复习。
+docs/interview_qa.md
+docs/interview_qa.docx
+docs/~$*.docx

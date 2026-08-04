@@ -1,0 +1,20 @@
+[
+  {
+    "question": "订单取消后多久退款？",
+    "answer": "未发货订单取消成功后，退款会按原支付路径退回，通常需要 3 到 7 个工作日到账。",
+    "category": "订单",
+    "source": "faq_order_after_sales.json"
+  },
+  {
+    "question": "退货需要自己承担运费吗？",
+    "answer": "非人为质量问题导致的退货，平台会根据售后审核结果承担或补偿运费；非质量原因退货，运费规则以商品页面和活动规则为准。",
+    "category": "售后",
+    "source": "faq_order_after_sales.json"
+  },
+  {
+    "question": "换货会重新计算保修期吗？",
+    "answer": "换货后的保修期通常以原订单签收时间计算，特殊活动或延保服务以具体规则为准。",
+    "category": "保修",
+    "source": "faq_order_after_sales.json"
+  }
+]

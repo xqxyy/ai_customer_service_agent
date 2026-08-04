@@ -1,0 +1,21 @@
+# 本文件定义项目本地开发依赖的 PostgreSQL 服务。
+# 后端通过 .env 里的 DATABASE_URL 连接数据库，首次启动后需要执行：
+# python -m alembic upgrade head
+
+services:
+  # PostgreSQL 数据库：保存消息、工单、工具调用日志、Agent run 和引用来源。
+  postgres:
+    image: postgres:16
+    container_name: ai-customer-service-postgres
+    environment:
+      POSTGRES_DB: customer_service
+      POSTGRES_USER: customer_service
+      POSTGRES_PASSWORD: customer_service
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  # 持久化 PostgreSQL 数据：容器删除后数据卷仍然可以保留。
+  postgres_data:

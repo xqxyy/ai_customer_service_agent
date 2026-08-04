@@ -1,0 +1,716 @@
+/* 全局主题变量：集中管理工作台的颜色、边框、阴影和暗色模式。 */
+:root {
+  --bg: #101214;
+  --panel: #181b1f;
+  --panel-soft: #1f2328;
+  --line: #2a3037;
+  --line-strong: #3a424c;
+  --text: #eef1f2;
+  --muted: #9aa4ad;
+  --subtle: #6f7a84;
+  --jade: #5fc3a1;
+  --blue: #7fa7d9;
+  --amber: #d7b56d;
+  --rose: #d96a7c;
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.26);
+  color-scheme: dark;
+}
+
+/* 基础盒模型：让 padding/border 不撑破固定宽度布局。 */
+* {
+  box-sizing: border-box;
+}
+
+/* 页面基础样式：定义全局字体、背景和最小可用宽度。 */
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    Inter, "Segoe UI", "Microsoft YaHei", "PingFang SC", Arial, sans-serif;
+  letter-spacing: 0;
+}
+
+/* 表单控件基础样式：继承页面字体，保持输入框和按钮视觉一致。 */
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* 应用总布局：左侧固定导航，右侧自适应工作区。 */
+.app-shell {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+/* 左侧导航栏：提供不同工作台视图的切换入口。 */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 12px;
+  border-right: 1px solid var(--line);
+  background: #0c0e10;
+}
+
+/* 品牌标识：工作台左上角的小型项目识别符。 */
+.brand-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  margin-bottom: 18px;
+  border: 1px solid rgba(95, 195, 161, 0.55);
+  border-radius: 8px;
+  color: var(--jade);
+  font-size: 14px;
+  font-weight: 800;
+  background: rgba(95, 195, 161, 0.08);
+}
+
+/* 导航按钮：当前视图和 hover 状态通过 active 类区分。 */
+.nav-button {
+  width: 48px;
+  min-height: 42px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--subtle);
+  font-size: 13px;
+}
+
+.nav-button.active,
+.nav-button:hover {
+  border-color: var(--line-strong);
+  background: var(--panel-soft);
+  color: var(--text);
+}
+
+/* 主工作区：限制最大宽度并提供页面级间距。 */
+.workspace {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: min(1520px, 100%);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* 顶部栏：放置页面标题、健康状态和 OpenAPI 入口。 */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 6px 0 2px;
+}
+
+/* 小标题文本：用于面板类型和顶部英文识别。 */
+.eyebrow,
+.panel-kicker {
+  margin: 0 0 6px;
+  color: var(--subtle);
+  font-family: "Segoe UI Mono", Consolas, monospace;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+/* 标题基础样式：清除默认 margin，统一信息层级。 */
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+h1 {
+  font-size: 30px;
+  line-height: 1.15;
+  font-weight: 760;
+}
+
+h2 {
+  font-size: 17px;
+  line-height: 1.25;
+  font-weight: 720;
+}
+
+/* 顶部状态区域：允许小屏幕自动换行。 */
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* 状态胶囊和计数徽标：用于 API 状态、文档数、工具调用数等轻量信息。 */
+.status-pill,
+.docs-link,
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  border: 1px solid rgba(95, 195, 161, 0.34);
+  border-radius: 999px;
+  padding: 0 12px;
+  color: var(--jade);
+  background: rgba(95, 195, 161, 0.08);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.status-pill.muted {
+  border-color: var(--line);
+  color: var(--muted);
+  background: var(--panel);
+}
+
+.docs-link {
+  border-color: rgba(127, 167, 217, 0.36);
+  color: var(--blue);
+  background: rgba(127, 167, 217, 0.08);
+}
+
+/* 会话控制条：集中放 session、user 和快捷问题。 */
+.control-strip {
+  display: grid;
+  grid-template-columns: 190px 160px minmax(0, 1fr);
+  gap: 12px;
+  align-items: end;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+/* 表单标签：上下排列标签和输入框，方便窄屏布局。 */
+label {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+}
+
+label span {
+  color: var(--subtle);
+  font-family: "Segoe UI Mono", Consolas, monospace;
+  font-size: 12px;
+}
+
+/* 输入控件：统一暗色背景、边框、圆角和聚焦状态。 */
+input,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  outline: none;
+  color: var(--text);
+  background: #111417;
+}
+
+input {
+  height: 40px;
+  padding: 0 12px;
+}
+
+textarea {
+  min-height: 88px;
+  max-height: 180px;
+  resize: vertical;
+  padding: 12px;
+  line-height: 1.55;
+}
+
+input:focus,
+textarea:focus {
+  border-color: rgba(95, 195, 161, 0.76);
+  box-shadow: 0 0 0 3px rgba(95, 195, 161, 0.12);
+}
+
+/* 快捷操作区：展示常见问题按钮。 */
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+/* 次级按钮：用于刷新、快捷问题和工单状态操作。 */
+.quick-actions button,
+.ghost-button,
+.ticket-actions button {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--muted);
+  background: #15181b;
+}
+
+.quick-actions button:hover,
+.ghost-button:hover,
+.ticket-actions button:hover {
+  border-color: var(--line-strong);
+  color: var(--text);
+  background: var(--panel-soft);
+}
+
+/* 主内容网格：桌面端同时展示聊天、Trace、知识库和工单。 */
+.grid {
+  display: grid;
+  grid-template-columns: minmax(360px, 1.2fr) minmax(320px, 0.85fr) minmax(340px, 0.95fr);
+  grid-template-rows: minmax(360px, 1fr) 320px;
+  gap: 18px;
+  min-height: calc(100vh - 190px);
+}
+
+/* 面板基础样式：所有工作区卡片共享边框、背景和滚动边界。 */
+.panel {
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* 聊天面板布局：顶部标题、中间消息流、底部输入框。 */
+.chat-panel {
+  grid-row: 1 / span 2;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+}
+
+/* 右侧信息面板布局：标题区 + 可滚动内容区。 */
+.insight-panel,
+.knowledge-panel,
+.ticket-panel,
+.eval-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+}
+
+.ticket-panel {
+  grid-column: 3;
+  grid-row: 1 / span 2;
+}
+
+.eval-panel {
+  display: none;
+}
+
+/* 聚焦视图布局：切换到工单/知识库/评估时隐藏不相关面板。 */
+.grid[data-view="tickets"],
+.grid[data-view="knowledge"],
+.grid[data-view="evals"] {
+  grid-template-columns: minmax(360px, 0.72fr) minmax(480px, 1.28fr);
+  grid-template-rows: minmax(620px, calc(100vh - 190px));
+}
+
+.grid[data-view="tickets"] .chat-panel,
+.grid[data-view="tickets"] .knowledge-panel,
+.grid[data-view="tickets"] .eval-panel,
+.grid[data-view="knowledge"] .chat-panel,
+.grid[data-view="knowledge"] .ticket-panel,
+.grid[data-view="knowledge"] .eval-panel,
+.grid[data-view="evals"] .chat-panel,
+.grid[data-view="evals"] .knowledge-panel,
+.grid[data-view="evals"] .ticket-panel {
+  display: none;
+}
+
+.grid[data-view="tickets"] .insight-panel,
+.grid[data-view="knowledge"] .insight-panel,
+.grid[data-view="evals"] .insight-panel {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.grid[data-view="tickets"] .ticket-panel,
+.grid[data-view="knowledge"] .knowledge-panel,
+.grid[data-view="evals"] .eval-panel {
+  display: grid;
+  grid-column: 2;
+  grid-row: 1;
+}
+
+/* 面板标题栏：放置标题、刷新按钮或数量徽标。 */
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 72px;
+  padding: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* 面板滚动区域：列表内容超出时内部滚动，不撑破页面。 */
+.chat-stream,
+.trace-list,
+.knowledge-list,
+.ticket-list {
+  min-height: 0;
+  overflow: auto;
+  padding: 16px;
+}
+
+/* 聊天消息列表：纵向排列用户和 Agent 消息。 */
+.chat-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 单条聊天消息：根据角色使用不同对齐方式和边框颜色。 */
+.message {
+  width: min(86%, 720px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px 13px;
+  background: #14171a;
+}
+
+.message.assistant {
+  align-self: flex-start;
+  border-color: rgba(127, 167, 217, 0.22);
+}
+
+.message.user {
+  align-self: flex-end;
+  border-color: rgba(95, 195, 161, 0.28);
+  background: rgba(95, 195, 161, 0.08);
+}
+
+/* 消息元信息：展示角色和创建时间。 */
+.message-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  color: var(--subtle);
+  font-family: "Segoe UI Mono", Consolas, monospace;
+  font-size: 11px;
+}
+
+/* 消息正文：保留换行并避免长文本溢出。 */
+.message-content {
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.62;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* 输入区：固定在聊天面板底部，负责发送新问题。 */
+.composer {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border-top: 1px solid var(--line);
+}
+
+/* 发送按钮：主操作按钮，用于提交聊天消息。 */
+.send-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border: 0;
+  border-radius: 8px;
+  color: #07110d;
+  background: var(--jade);
+  font-weight: 760;
+}
+
+.send-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+/* 列表容器：Trace、知识库、工单和评估卡片统一纵向间距。 */
+.trace-list,
+.knowledge-list,
+.ticket-list {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.eval-body {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 0;
+  overflow: auto;
+  padding: 16px;
+}
+
+/* 列表卡片：工具调用、文档、工单、空状态和评估卡片的统一外观。 */
+.trace-item,
+.doc-item,
+.ticket-item,
+.empty-state,
+.eval-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 13px;
+  background: #14171a;
+}
+
+/* 评估命令代码块：展示终端命令时保持等宽字体和横向滚动。 */
+.eval-card pre {
+  margin: 10px 0 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--jade);
+  background: #101316;
+  font-family: "Segoe UI Mono", Consolas, monospace;
+  font-size: 12px;
+}
+
+.eval-card ul {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* Trace 节点装饰：用小圆点突出工具调用时间线。 */
+.trace-item {
+  position: relative;
+  padding-left: 38px;
+}
+
+.trace-item::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 18px;
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: var(--jade);
+  box-shadow: 0 0 0 5px rgba(95, 195, 161, 0.12);
+}
+
+/* 卡片行布局：标题在左，状态或来源标签在右。 */
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* 卡片标题和正文：统一列表内部文字层级。 */
+.item-title {
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 720;
+  line-height: 1.35;
+}
+
+.item-subtitle,
+.item-body,
+.empty-state {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.item-body {
+  margin-top: 8px;
+}
+
+/* 来源和状态标签：用于 doc_id、时间、工单状态等短信息。 */
+.source-chip,
+.status-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  border-radius: 999px;
+  padding: 0 9px;
+  color: var(--muted);
+  background: var(--panel-soft);
+  font-family: "Segoe UI Mono", Consolas, monospace;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+/* 工单状态颜色：不同状态使用不同强调色，方便快速扫描。 */
+.status-chip.open {
+  color: var(--blue);
+  background: rgba(127, 167, 217, 0.1);
+}
+
+.status-chip.pending_review {
+  color: var(--amber);
+  background: rgba(215, 181, 109, 0.1);
+}
+
+.status-chip.resolved {
+  color: var(--jade);
+  background: rgba(95, 195, 161, 0.1);
+}
+
+.status-chip.closed {
+  color: var(--rose);
+  background: rgba(217, 106, 124, 0.1);
+}
+
+/* 工单操作按钮区：允许人工把工单流转到待审核、解决或关闭。 */
+.ticket-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.ticket-actions button {
+  padding: 0 8px;
+  font-size: 12px;
+}
+
+/* 空状态：列表没有数据时保持面板不空白。 */
+.empty-state {
+  display: grid;
+  min-height: 94px;
+  place-items: center;
+  text-align: center;
+}
+
+/* Toast：右下角短提示，不阻塞用户操作。 */
+.toast {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 20;
+  max-width: min(420px, calc(100vw - 40px));
+  border: 1px solid var(--line-strong);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: var(--text);
+  background: #15191d;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 无障碍动效偏好：用户选择减少动画时关闭 Toast 过渡。 */
+@media (prefers-reduced-motion: reduce) {
+  .toast {
+    transition: none;
+  }
+}
+
+/* 中等屏幕布局：两列展示，工单面板下沉到第二行。 */
+@media (max-width: 1180px) {
+  .grid {
+    grid-template-columns: minmax(340px, 1fr) minmax(320px, 0.9fr);
+    grid-template-rows: minmax(420px, 1fr) 320px 360px;
+  }
+
+  .ticket-panel {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+  }
+}
+
+/* 小屏幕布局：导航变为顶部栏，所有面板单列展示。 */
+@media (max-width: 780px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .brand-mark {
+    margin-bottom: 0;
+  }
+
+  .nav-button {
+    width: auto;
+    padding: 0 10px;
+  }
+
+  .workspace {
+    padding: 16px;
+  }
+
+  .topbar,
+  .control-strip {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .topbar-actions,
+  .quick-actions {
+    justify-content: flex-start;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .chat-panel,
+  .ticket-panel,
+  .grid[data-view="tickets"] .insight-panel,
+  .grid[data-view="tickets"] .ticket-panel,
+  .grid[data-view="knowledge"] .insight-panel,
+  .grid[data-view="knowledge"] .knowledge-panel,
+  .grid[data-view="evals"] .insight-panel,
+  .grid[data-view="evals"] .eval-panel {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .chat-panel {
+    min-height: 620px;
+  }
+
+  .message {
+    width: 100%;
+  }
+
+  .ticket-actions {
+    grid-template-columns: 1fr;
+  }
+}

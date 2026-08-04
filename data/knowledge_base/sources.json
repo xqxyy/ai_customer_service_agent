@@ -1,0 +1,209 @@
+[
+  {
+    "doc_id": "refund_policy",
+    "title": "退款政策",
+    "source_path": "data/knowledge_base/markdown/refund_policy.md",
+    "doc_type": "markdown",
+    "business_area": "售后",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "return_exchange_policy",
+    "title": "退换货政策",
+    "source_path": "data/knowledge_base/markdown/return_exchange_policy.md",
+    "doc_type": "markdown",
+    "business_area": "售后",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "shipping_policy",
+    "title": "物流政策",
+    "source_path": "data/knowledge_base/markdown/shipping_policy.md",
+    "doc_type": "markdown",
+    "business_area": "物流",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "delivery_exception_policy",
+    "title": "物流异常处理规则",
+    "source_path": "data/knowledge_base/markdown/delivery_exception_policy.md",
+    "doc_type": "markdown",
+    "business_area": "物流",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "warranty_policy",
+    "title": "保修政策",
+    "source_path": "data/knowledge_base/markdown/warranty_policy.md",
+    "doc_type": "markdown",
+    "business_area": "售后",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "invoice_policy",
+    "title": "发票政策",
+    "source_path": "data/knowledge_base/markdown/invoice_policy.md",
+    "doc_type": "markdown",
+    "business_area": "财务",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "payment_policy",
+    "title": "支付政策",
+    "source_path": "data/knowledge_base/markdown/payment_policy.md",
+    "doc_type": "markdown",
+    "business_area": "支付",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "coupon_policy",
+    "title": "优惠券政策",
+    "source_path": "data/knowledge_base/markdown/coupon_policy.md",
+    "doc_type": "markdown",
+    "business_area": "营销",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "membership_policy",
+    "title": "会员政策",
+    "source_path": "data/knowledge_base/markdown/membership_policy.md",
+    "doc_type": "markdown",
+    "business_area": "会员",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "account_security_policy",
+    "title": "账号安全政策",
+    "source_path": "data/knowledge_base/markdown/account_security_policy.md",
+    "doc_type": "markdown",
+    "business_area": "账号",
+    "risk_level": "high",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "privacy_policy",
+    "title": "隐私与数据规则",
+    "source_path": "data/knowledge_base/markdown/privacy_policy.md",
+    "doc_type": "markdown",
+    "business_area": "隐私",
+    "risk_level": "high",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "complaint_policy",
+    "title": "投诉处理规则",
+    "source_path": "data/knowledge_base/markdown/complaint_policy.md",
+    "doc_type": "markdown",
+    "business_area": "投诉",
+    "risk_level": "high",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "manual_review_policy",
+    "title": "人工审核规则",
+    "source_path": "data/knowledge_base/markdown/manual_review_policy.md",
+    "doc_type": "markdown",
+    "business_area": "风控",
+    "risk_level": "high",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "order_cancellation_policy",
+    "title": "订单取消政策",
+    "source_path": "data/knowledge_base/markdown/order_cancellation_policy.md",
+    "doc_type": "markdown",
+    "business_area": "订单",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "order_change_policy",
+    "title": "订单修改政策",
+    "source_path": "data/knowledge_base/markdown/order_change_policy.md",
+    "doc_type": "markdown",
+    "business_area": "订单",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "faq_order_after_sales",
+    "title": "订单与售后 FAQ",
+    "source_path": "data/knowledge_base/json/faq_order_after_sales.json",
+    "doc_type": "json_faq",
+    "business_area": "售后",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "customer_service_tone_rules",
+    "title": "客服回复语气规则",
+    "source_path": "data/knowledge_base/txt/customer_service_tone_rules.txt",
+    "doc_type": "txt",
+    "business_area": "客服规范",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "high_risk_review_rules",
+    "title": "高风险人工审核补充规则",
+    "source_path": "data/knowledge_base/txt/high_risk_review_rules.txt",
+    "doc_type": "txt",
+    "business_area": "风控",
+    "risk_level": "high",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "invoice_policy_pdf",
+    "title": "发票规则 PDF",
+    "source_path": "data/knowledge_base/pdf/invoice_policy_pdf.pdf",
+    "doc_type": "pdf",
+    "business_area": "财务",
+    "risk_level": "normal",
+    "need_ocr": false
+  },
+  {
+    "doc_id": "account_recovery_scan",
+    "title": "扫描版账号找回规则",
+    "source_path": "data/knowledge_base/scanned/account_recovery_scan.pdf",
+    "doc_type": "scanned_pdf",
+    "business_area": "账号",
+    "risk_level": "high",
+    "need_ocr": true
+  },
+  {
+    "doc_id": "delivery_exception_scan",
+    "title": "扫描版物流异常处理规则",
+    "source_path": "data/knowledge_base/scanned/delivery_exception_scan.pdf",
+    "doc_type": "scanned_pdf",
+    "business_area": "物流",
+    "risk_level": "normal",
+    "need_ocr": true
+  },
+  {
+    "doc_id": "payment_dispute_scan",
+    "title": "扫描版支付异常处理规则",
+    "source_path": "data/knowledge_base/scanned/payment_dispute_scan.pdf",
+    "doc_type": "scanned_pdf",
+    "business_area": "支付",
+    "risk_level": "high",
+    "need_ocr": true
+  },
+  {
+    "doc_id": "privacy_request_scan",
+    "title": "扫描版隐私处理规则",
+    "source_path": "data/knowledge_base/scanned/privacy_request_scan.pdf",
+    "doc_type": "scanned_pdf",
+    "business_area": "隐私",
+    "risk_level": "high",
+    "need_ocr": true
+  }
+]
