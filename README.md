@@ -348,7 +348,7 @@ tickets 表保存 risk_reason 和 matched_keyword
 后来为什么升级：
 
 ```text
-面试展示时，只看 Swagger 不够直观。
+展示时，只看 Swagger 不够直观。
 需要一个页面同时看到聊天、工单、知识库和工具调用过程。
 ```
 
@@ -848,34 +848,8 @@ chunk_size / chunk_overlap 是否适合当前文档
 rag_eval.json 是否覆盖新问题
 ```
 
-### Windows PowerShell 中文输出异常
 
-```powershell
-$env:PYTHONIOENCODING="utf-8"
-```
-
----
-
-## 面试讲法
-
-可以这样开场：
-
-```text
-这个项目是一个 AI 客服 Agent 工程化作品。它不是单纯调用大模型聊天，
-而是把客服系统里的知识库问答、订单查询、客户查询、工单创建、人工审核、
-Trace 记录和评估脚本串成一个完整链路。
-
-用户问题进入 FastAPI 后会生成 run_id。后端先做高风险规则识别，命中投诉、
-赔偿、法律、隐私等关键词会直接创建 pending_review 工单。普通问题交给
-LangChain Agent，由 Agent 决定调用知识库、订单、客户或工单工具。
-
-RAG 侧我做了 sources 管理、多格式 loader、OCR、切块、Embedding、Milvus 入库和评估。
-数据库侧从 SQLite 学习版升级到了 SQLAlchemy + Alembic，最终可以接 PostgreSQL。
-每次执行都会保存 messages、tool_call_logs、message_sources 和 agent_runs，
-所以可以通过 run_id 查到完整执行过程。
-```
-
-一句话总结：
+总结：
 
 ```text
 这个项目展示的是从“能跑的 Agent Demo”升级到“有工具、有 RAG、有数据库迁移、有人工审核、有 Trace 和故障降级的 AI Agent 工程化应用”。
@@ -896,4 +870,3 @@ RAG 侧我做了 sources 管理、多格式 loader、OCR、切块、Embedding、
 8. 部署到云服务器并接入真实前端域名
 ```
 
-当前项目已经足够作为作品集核心项目展示，后续重点应该是稳定演示、讲清架构、准备面试问题，而不是继续盲目堆功能。
