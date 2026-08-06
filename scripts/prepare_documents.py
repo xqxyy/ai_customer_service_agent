@@ -52,6 +52,10 @@ def build_document(source: dict) -> dict | None:
             "business_area": source.get("business_area"),
             "risk_level": source.get("risk_level"),
             "need_ocr": source.get("need_ocr", False),
+            # source_kind 用来区分项目自造示例、公开数据、权威资料等不同来源类型，便于后续筛选和解释。
+            "source_kind": source.get("source_kind", "project_sample"),
+            # jurisdiction 标记资料适用地区；先支持中国大陆，后续可扩展到省市或海外地区。
+            "jurisdiction": source.get("jurisdiction", ""),
         },
     }
 

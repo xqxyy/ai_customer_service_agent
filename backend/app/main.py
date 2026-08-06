@@ -26,7 +26,7 @@ from backend.app.db.session import (
     list_tool_calls_by_run_id,
     update_ticket_status,
 )
-from backend.app.rag.documents import DOCUMENTS
+from backend.app.rag.documents import load_processed_documents
 from backend.app.rag.retriever import check_milvus_health
 from backend.app.schemas.chat import ChatRequest, ChatResponse
 
@@ -79,7 +79,8 @@ def workbench_state():
         "messages": list_messages(),
         "tickets": list_tickets(),
         "tool_calls": list_tool_calls(),
-        "documents": DOCUMENTS,
+        # 每次请求读取最新 documents.jsonl，避免重建 RAG 后工作台仍显示旧知识库清单。
+        "documents": load_processed_documents(),
     }
 
 

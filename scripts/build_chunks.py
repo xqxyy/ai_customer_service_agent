@@ -79,6 +79,9 @@ def build_chunks(documents: list[dict]) -> list[dict]:
                 "doc_type": chunk.metadata.get("doc_type", ""),
                 "business_area": chunk.metadata.get("business_area"),
                 "risk_level": chunk.metadata.get("risk_level"),
+                # 保留来源类型和适用地区，后续入库到 Milvus 后可以用于检索结果解释或区域过滤。
+                "source_kind": chunk.metadata.get("source_kind", ""),
+                "jurisdiction": chunk.metadata.get("jurisdiction", ""),
                 "content": chunk.page_content,
             }
         )

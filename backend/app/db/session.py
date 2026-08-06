@@ -232,6 +232,12 @@ def save_ticket(ticket: dict):
                 risk_level=ticket.get("risk_level", "normal"),
                 risk_reason=ticket.get("risk_reason", ""),
                 matched_keyword=ticket.get("matched_keyword", ""),
+                source_dataset=ticket.get("source_dataset"),
+                external_id=ticket.get("external_id"),
+                category=ticket.get("category"),
+                queue=ticket.get("queue"),
+                language=ticket.get("language"),
+                tags=ticket.get("tags"),
                 status=ticket["status"],
             )
         )
@@ -339,6 +345,12 @@ def list_tickets(limit: int = 30) -> list[dict]:
             "risk_level": row.risk_level,
             "risk_reason": row.risk_reason,
             "matched_keyword": row.matched_keyword,
+            "source_dataset": row.source_dataset,
+            "external_id": row.external_id,
+            "category": row.category,
+            "queue": row.queue,
+            "language": row.language,
+            "tags": row.tags or [],
             "status": row.status,
             "created_at": _format_datetime(row.created_at),
         }

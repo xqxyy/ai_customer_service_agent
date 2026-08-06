@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-07-29T10:31:03.678355",
-  "total_sources": 23,
-  "prepared_docs": 23,
-  "chunks": 48,
+  "created_at": "2026-08-06T10:58:31.079729",
+  "total_sources": 36,
+  "prepared_docs": 36,
+  "chunks": 181,
   "skipped_ocr": []
 }

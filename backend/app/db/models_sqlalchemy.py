@@ -62,6 +62,12 @@ class Ticket(Base):
     risk_level: Mapped[str] = mapped_column(String(20), default="normal")
     risk_reason: Mapped[str | None] = mapped_column(Text, nullable=True)
     matched_keyword: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    source_dataset: Mapped[str | None] = mapped_column(String(100), index=True, nullable=True)
+    external_id: Mapped[str | None] = mapped_column(String(200), index=True, nullable=True)
+    category: Mapped[str | None] = mapped_column(String(100), index=True, nullable=True)
+    queue: Mapped[str | None] = mapped_column(String(100), nullable=True)
+    language: Mapped[str | None] = mapped_column(String(30), nullable=True)
+    tags: Mapped[list | None] = mapped_column(JSON, nullable=True)
     status: Mapped[str] = mapped_column(String(30), default="open")
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 

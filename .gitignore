@@ -32,11 +32,21 @@ Thumbs.db
 # 临时构建、渲染、转换产物。
 tmp/
 
-# Word 文档和 Word 打开的临时锁文件；GitHub 作品集只上传 Markdown/源码。
+# Word 文档和 Word 打开的临时锁文件；公开仓库只上传 Markdown/源码。
 *.docx
 ~$*.docx
 
-# 不上传面试问答资料，它只保留在本地复习。
-docs/interview_qa.md
-docs/interview_qa.docx
+# 不上传本地私有复习资料。
+README-foruser.md
+readme-foruser.md
+docs/*qa*.md
+docs/*qa*.docx
 docs/~$*.docx
+
+# 公开数据集的原始下载和生成结果体积较大，按脚本在本地生成，不直接提交。
+data/external/*
+!data/external/README.md
+data/generated/*
+!data/generated/README.md
+data/public_samples/*
+!data/public_samples/README.md

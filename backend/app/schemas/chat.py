@@ -14,6 +14,12 @@ class Source(BaseModel):
     title: str
     source: str
     source_path: str = ""
+    # 以下字段来自 RAG 元数据，前端和 Trace 可据此判断来源类型、业务领域和适用地区。
+    doc_type: str = ""
+    business_area: str = ""
+    risk_level: str = ""
+    source_kind: str = ""
+    jurisdiction: str = ""
     score: float
 
 

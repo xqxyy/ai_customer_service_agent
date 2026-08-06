@@ -35,3 +35,6 @@ alembic
 
 # PostgreSQL 驱动
 psycopg2-binary
+
+# 公开数据集下载工具，用于直接读取 Hugging Face 或镜像站 CSV 文件。
+requests

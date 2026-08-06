@@ -246,8 +246,23 @@ function renderDocuments() {
     content.className = "item-body";
     content.textContent = doc.content;
 
+    const meta = document.createElement("p");
+    meta.className = "item-subtitle";
+    const metadata = doc.metadata || {};
+    meta.textContent = [
+      metadata.source_kind ? `来源类型：${metadata.source_kind}` : "",
+      metadata.jurisdiction ? `地区：${metadata.jurisdiction}` : "",
+      metadata.business_area ? `业务：${metadata.business_area}` : "",
+      metadata.risk_level ? `风险：${metadata.risk_level}` : "",
+      doc.doc_type ? `类型：${doc.doc_type}` : "",
+    ].filter(Boolean).join("；");
+
     row.append(title, source);
-    item.append(row, content);
+    item.append(row);
+    if (meta.textContent) {
+      item.appendChild(meta);
+    }
+    item.appendChild(content);
     els.knowledgeList.appendChild(item);
   }
 }
@@ -292,6 +307,18 @@ function renderTickets() {
       riskMeta.textContent = `审核原因：${ticket.risk_reason || "-"}；命中关键词：${ticket.matched_keyword || "-"}`;
     }
 
+    const sourceMeta = document.createElement("p");
+    sourceMeta.className = "item-subtitle";
+    if (ticket.source_dataset || ticket.category || ticket.queue || ticket.language) {
+      const parts = [
+        ticket.source_dataset ? `来源：${ticket.source_dataset}` : "",
+        ticket.category ? `分类：${ticket.category}` : "",
+        ticket.queue ? `队列：${ticket.queue}` : "",
+        ticket.language ? `语言：${ticket.language}` : "",
+      ].filter(Boolean);
+      sourceMeta.textContent = parts.join("；");
+    }
+
     const actions = document.createElement("div");
     actions.className = "ticket-actions";
     actions.append(
@@ -305,6 +332,9 @@ function renderTickets() {
     item.append(row, body);
     if (riskMeta.textContent) {
       item.appendChild(riskMeta);
+    }
+    if (sourceMeta.textContent) {
+      item.appendChild(sourceMeta);
     }
     item.appendChild(actions);
     els.ticketList.appendChild(item);

@@ -1,0 +1,627 @@
+[
+  {
+    "doc_id": "cn_consumer_rights_after_sales_reference",
+    "title": "中国消费者权益与售后争议处理参考",
+    "business_area": "售后",
+    "risk_level": "high",
+    "jurisdiction": "中国大陆",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_consumer_rights_after_sales_reference.md",
+    "authority_sources": [
+      {
+        "name": "中华人民共和国消费者权益保护法实施条例",
+        "publisher": "中国政府网/国务院",
+        "url": "https://www.gov.cn/zhengce/content/202403/content_6940158.htm",
+        "source_type": "行政法规"
+      },
+      {
+        "name": "中华人民共和国消费者权益保护法",
+        "publisher": "国家信访局转载法律文本",
+        "url": "https://www.gjxfj.gov.cn/gjxfj/fgwj/flfg/webinfo/2014/05/1601761496745758.htm",
+        "source_type": "法律"
+      }
+    ],
+    "customer_service_summary": [
+      "售后争议回复应围绕商品质量、服务承诺、平台规则和用户诉求进行核验，不能只给安抚话术。",
+      "用户提出投诉、索赔、监管举报、明显质量争议时，应进入人工审核或工单流转。",
+      "涉及退一赔三、欺诈、惩罚性赔偿等法律判断时，AI 只能说明会转人工核实，不能直接承诺赔偿结论。"
+    ],
+    "standard_handling": [
+      "先确认订单号、商品类型、收货时间、问题描述、图片或检测凭证。",
+      "若属于普通售后咨询，按平台退换货、退款、维修政策答复。",
+      "若用户主张经营者欺诈、质量损害、监管投诉、赔偿等，创建高优先级工单并标记 pending_review。",
+      "答复中要提示处理需要结合订单、商品、凭证和适用规则核实。"
+    ],
+    "answer_boundaries": [
+      "不能代表平台直接认定商家欺诈。",
+      "不能直接承诺赔偿金额、处罚结果或监管结论。",
+      "不能将消费者权益参考资料解释为所有订单都必然适用的统一结果。"
+    ],
+    "escalation_triggers": [
+      "用户要求赔偿、投诉、举报、找监管部门、找律师、起诉。",
+      "用户称商品造成财产或人身损害。",
+      "用户质疑虚假宣传、价格欺诈、以次充好。"
+    ],
+    "sample_questions": [
+      "商家拒绝售后怎么办？",
+      "商品有质量问题可以要求赔偿吗？",
+      "我要投诉平台和商家。"
+    ],
+    "update_note": "该文档用于客服处理边界和工单升级参考，不替代法律意见。"
+  },
+  {
+    "doc_id": "cn_seven_day_return_reference",
+    "title": "网络购买商品七日无理由退货参考",
+    "business_area": "售后",
+    "risk_level": "normal",
+    "jurisdiction": "中国大陆",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_seven_day_return_reference.md",
+    "authority_sources": [
+      {
+        "name": "网络购买商品七日无理由退货暂行办法",
+        "publisher": "国家市场监督管理总局法规数据库",
+        "url": "https://sjfg.samr.gov.cn/law/js/legacy-pdfjs/web/viewer.html?file=https%3A%2F%2Fsjfg.samr.gov.cn%2Flaw%2Ffile%2F%2Fpdf%2F3235243%2F1663578568290.pdf",
+        "source_type": "部门规章"
+      }
+    ],
+    "customer_service_summary": [
+      "七日无理由退货适用于网络购买商品场景，但并非所有商品都当然适用。",
+      "是否支持七日无理由，应结合商品性质、是否影响二次销售、页面明示规则和订单状态核验。",
+      "客服回复应避免把“七日无理由”扩大解释为无条件、无限制退货。"
+    ],
+    "standard_handling": [
+      "确认签收时间、商品类别、是否拆封使用、配件票据是否完整。",
+      "若商品明显属于不可退或不适宜退货类别，应说明需按商品页面和平台规则核实。",
+      "若用户处于签收后七日内且商品完好，提示可发起退货申请，并说明退货运费和退款路径以平台规则为准。",
+      "若商家拒绝或争议较大，创建售后工单。"
+    ],
+    "answer_boundaries": [
+      "不能承诺所有商品都可以七日无理由退货。",
+      "不能在未核验订单与商品状态时承诺退款成功。",
+      "不能替代人工对商品是否影响二次销售作最终判断。"
+    ],
+    "escalation_triggers": [
+      "用户称商家拒绝履行七日无理由。",
+      "用户与商家对商品完好、拆封、使用痕迹存在争议。",
+      "用户要求平台介入或投诉。"
+    ],
+    "sample_questions": [
+      "签收 5 天还能无理由退货吗？",
+      "拆封后还能七天无理由退吗？",
+      "商家拒绝七日无理由怎么办？"
+    ],
+    "update_note": "该文档用于电商售后规则参考，具体订单仍需结合平台商品规则核验。"
+  },
+  {
+    "doc_id": "cn_ecommerce_platform_reference",
+    "title": "中国电子商务平台经营与订单履约参考",
+    "business_area": "订单",
+    "risk_level": "normal",
+    "jurisdiction": "中国大陆",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_ecommerce_platform_reference.md",
+    "authority_sources": [
+      {
+        "name": "中华人民共和国电子商务法",
+        "publisher": "共产党员网转载中国人大网法律文本",
+        "url": "https://www.12371.cn/2020/06/11/ARTI1591822932213296.shtml",
+        "source_type": "法律"
+      }
+    ],
+    "customer_service_summary": [
+      "电子商务客服应区分平台规则、商家责任、物流责任和消费者操作问题。",
+      "订单取消、履约、支付、售后争议需要结合订单状态和平台协议处理。",
+      "平台类争议涉及经营者义务、平台协助、争议解决机制时，建议沉淀工单追踪。"
+    ],
+    "standard_handling": [
+      "先确认订单状态：待付款、待发货、已发货、已签收、售后中。",
+      "待发货订单优先按平台取消规则处理；已发货订单通常进入退货或物流拦截流程。",
+      "商家未履约、超时发货、页面承诺争议，应记录商品页面、订单时间和用户凭证。",
+      "平台责任或商家责任无法自动判断时，创建工单。"
+    ],
+    "answer_boundaries": [
+      "不能在未读取订单状态时承诺可取消或可退款。",
+      "不能直接认定平台或商家违法。",
+      "不能绕过平台规则给出人工补偿承诺。"
+    ],
+    "escalation_triggers": [
+      "用户称商家不发货、不履约、虚假宣传。",
+      "用户要求平台介入争议。",
+      "订单金额较大或涉及批量投诉。"
+    ],
+    "sample_questions": [
+      "已发货订单还能取消吗？",
+      "商家一直不发货怎么办？",
+      "页面承诺和实际不一致怎么办？"
+    ],
+    "update_note": "该文档用于订单履约和平台责任边界参考，具体处理以平台规则和订单状态为准。"
+  },
+  {
+    "doc_id": "cn_express_delivery_reference",
+    "title": "中国快递服务与物流异常处理参考",
+    "business_area": "物流",
+    "risk_level": "normal",
+    "jurisdiction": "中国大陆",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_express_delivery_reference.md",
+    "authority_sources": [
+      {
+        "name": "快递暂行条例",
+        "publisher": "国家邮政局",
+        "url": "https://www.spb.gov.cn/gjyzj/c200080/201803/ad6d930a34f7408ebf435c8e749ccc2f.shtml",
+        "source_type": "行政法规"
+      },
+      {
+        "name": "国务院关于修改《快递暂行条例》的决定",
+        "publisher": "生态环境部转载国务院文件",
+        "url": "https://www.mee.gov.cn/zcwj/gwywj/202504/t20250422_1117316.shtml",
+        "source_type": "行政法规修订"
+      }
+    ],
+    "customer_service_summary": [
+      "物流异常需要区分未揽收、运输停滞、派送失败、签收争议、破损丢失等场景。",
+      "用户个人信息、收件地址、联系方式属于敏感处理范围，不应在对话中重复暴露。",
+      "涉及丢件、破损、错派、信息泄露时，应创建物流异常工单并保留凭证。"
+    ],
+    "standard_handling": [
+      "先确认物流单号、承运方、最近节点、停滞时长、签收状态。",
+      "普通停滞可提示继续关注并发起物流催查。",
+      "签收争议、破损、疑似丢件应要求用户提供外包装、商品照片、签收凭证，并创建工单。",
+      "涉及地址或联系方式修改，应核验用户身份并避免在回复中完整展示敏感信息。"
+    ],
+    "answer_boundaries": [
+      "不能直接认定快递企业责任或赔偿金额。",
+      "不能在未核验物流节点时承诺补发或退款。",
+      "不能泄露或复述完整收件人个人信息。"
+    ],
+    "escalation_triggers": [
+      "物流超过平台规则时限无更新。",
+      "用户称包裹丢失、破损、被他人签收。",
+      "用户投诉快递泄露个人信息。"
+    ],
+    "sample_questions": [
+      "物流三天没有更新怎么办？",
+      "显示签收但我没收到怎么办？",
+      "包裹破损能赔吗？"
+    ],
+    "update_note": "该文档用于物流客服和异常工单参考，具体赔付以平台、承运方和订单规则核验为准。"
+  },
+  {
+    "doc_id": "cn_digital_invoice_reference",
+    "title": "中国数电发票与发票客服处理参考",
+    "business_area": "财务",
+    "risk_level": "normal",
+    "jurisdiction": "中国大陆",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_digital_invoice_reference.md",
+    "authority_sources": [
+      {
+        "name": "国家税务总局关于推广应用全面数字化电子发票的公告",
+        "publisher": "国家税务总局广东省税务局转载",
+        "url": "https://guangdong.chinatax.gov.cn/gdsw/zjfg/2024-11/25/content_753ed5d24aa3491999c20500fd5a1ef1.shtml",
+        "source_type": "税务公告"
+      },
+      {
+        "name": "关于推广应用全面数字化电子发票公告的解读",
+        "publisher": "国家税务总局政策法规库",
+        "url": "https://fgk.chinatax.gov.cn/zcfgk/c100015/c5236070/content.html",
+        "source_type": "政策解读"
+      }
+    ],
+    "customer_service_summary": [
+      "发票客服应区分开票、重开发票、抬头修改、红冲、查验、交付格式等问题。",
+      "数电发票具备电子化交付特征，常见格式包括 PDF、OFD、XML 等，具体以税务和平台系统支持为准。",
+      "涉及税务合规、专票、红字发票、企业抬头错误等问题，应进入财务工单。"
+    ],
+    "standard_handling": [
+      "先确认订单号、开票主体、发票类型、抬头、税号、邮箱或下载路径。",
+      "普通发票申请可按平台发票流程引导。",
+      "发票信息错误、红冲、专票、企业报销争议，应创建财务工单。",
+      "答复中提示发票查验以全国增值税发票查验平台或税务机关系统为准。"
+    ],
+    "answer_boundaries": [
+      "不能承诺税务机关查验结果。",
+      "不能替企业用户判断税前扣除或报销合规结论。",
+      "不能在未核验订单和开票主体时承诺重开。"
+    ],
+    "escalation_triggers": [
+      "用户要求红冲、重开、专票处理。",
+      "企业发票抬头、税号、金额争议。",
+      "用户称发票无法查验或报销被拒。"
+    ],
+    "sample_questions": [
+      "电子发票可以重新开吗？",
+      "发票抬头写错了怎么办？",
+      "数电发票支持 PDF 下载吗？"
+    ],
+    "update_note": "该文档用于发票客服参考，不提供税务法律意见。"
+  },
+  {
+    "doc_id": "cn_personal_information_reference",
+    "title": "中国个人信息保护与隐私请求处理参考",
+    "business_area": "隐私",
+    "risk_level": "high",
+    "jurisdiction": "中国大陆",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_personal_information_reference.md",
+    "authority_sources": [
+      {
+        "name": "中华人民共和国个人信息保护法",
+        "publisher": "国家互联网信息办公室转载中国人大网法律文本",
+        "url": "https://www.cac.gov.cn/2021-08/20/c_1631050028355286.htm",
+        "source_type": "法律"
+      }
+    ],
+    "customer_service_summary": [
+      "账号、手机号、地址、身份证明、交易记录等属于个人信息处理范围，客服回复应遵循最小必要原则。",
+      "用户要求查询、更正、删除、注销、撤回同意、投诉隐私泄露时，应进入隐私审核流程。",
+      "涉及未成年人、敏感个人信息、信息泄露、外部执法请求等场景时，AI 不能直接处理，应转人工。"
+    ],
+    "standard_handling": [
+      "先确认请求类型：查询、更正、删除、注销、解绑、撤回授权、投诉泄露。",
+      "涉及账号操作必须进行身份核验，不在公开对话中展示完整敏感信息。",
+      "隐私删除、数据导出、泄露投诉、未成年人信息处理，创建高风险工单。",
+      "回复中说明将按平台隐私流程和适用法律要求核验处理。"
+    ],
+    "answer_boundaries": [
+      "不能在未核验身份时直接修改或删除账号数据。",
+      "不能复述完整手机号、地址、身份证件号等敏感信息。",
+      "不能对泄露责任作最终认定。"
+    ],
+    "escalation_triggers": [
+      "用户称信息泄露、账号被盗、被冒用。",
+      "用户要求删除全部个人信息或注销账号。",
+      "涉及未成年人信息、敏感个人信息或执法机关请求。"
+    ],
+    "sample_questions": [
+      "我要删除我的个人信息。",
+      "你们泄露了我的手机号怎么办？",
+      "我要注销账号并删除订单记录。"
+    ],
+    "update_note": "该文档用于隐私请求识别和人工升级参考，不替代平台正式隐私政策。"
+  },
+  {
+    "doc_id": "cn_customer_complaint_escalation_reference",
+    "title": "中国客服投诉升级与监管争议处理参考",
+    "business_area": "投诉",
+    "risk_level": "high",
+    "jurisdiction": "中国大陆",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_customer_complaint_escalation_reference.md",
+    "authority_sources": [
+      {
+        "name": "中华人民共和国消费者权益保护法实施条例",
+        "publisher": "中国政府网/国务院",
+        "url": "https://www.gov.cn/zhengce/content/202403/content_6940158.htm",
+        "source_type": "行政法规"
+      },
+      {
+        "name": "快递暂行条例",
+        "publisher": "国家邮政局",
+        "url": "https://www.spb.gov.cn/gjyzj/c200080/201803/ad6d930a34f7408ebf435c8e749ccc2f.shtml",
+        "source_type": "行政法规"
+      }
+    ],
+    "customer_service_summary": [
+      "投诉升级不是单纯安抚，应记录诉求、证据、涉及订单、用户期望和风险点。",
+      "涉及监管投诉、媒体曝光、律师函、起诉、赔偿、隐私泄露、人身财产损害时，必须人工审核。",
+      "AI 可以说明已记录并转交专员处理，但不能承诺监管处理结果或法律结论。"
+    ],
+    "standard_handling": [
+      "识别投诉类型：售后、物流、支付、发票、隐私、账号、安全。",
+      "记录用户原始诉求和关键证据，不对争议事实作最终判断。",
+      "创建 pending_review 工单，优先级根据金额、风险关键词和影响范围调整。",
+      "回复中给出工单号和后续跟进方式。"
+    ],
+    "answer_boundaries": [
+      "不能承诺一定赔偿、一定退款或一定处罚商家。",
+      "不能引导用户放弃监管投诉或法律权利。",
+      "不能删除或篡改用户投诉记录。"
+    ],
+    "escalation_triggers": [
+      "投诉、举报、赔偿、律师、起诉、监管、媒体曝光。",
+      "用户要求人工、主管、法务、隐私专员介入。",
+      "同一问题多次投诉或多人集中反馈。"
+    ],
+    "sample_questions": [
+      "我要投诉你们平台。",
+      "我要找监管部门举报。",
+      "我要起诉并要求赔偿。"
+    ],
+    "update_note": "该文档用于投诉升级策略，具体处理仍需人工核验。"
+  },
+  {
+    "doc_id": "us_ftc_online_shopping_delivery_refunds_reference",
+    "title": "美国 FTC 在线购物交付、退货与退款参考",
+    "business_area": "售后",
+    "risk_level": "normal",
+    "jurisdiction": "美国",
+    "source_path": "data/knowledge_base/markdown/authoritative/us_ftc_online_shopping_delivery_refunds_reference.md",
+    "authority_sources": [
+      {
+        "name": "Online Shopping",
+        "publisher": "Federal Trade Commission Consumer Advice",
+        "url": "https://consumer.ftc.gov/articles/online-shopping",
+        "source_type": "政府消费者建议"
+      },
+      {
+        "name": "What To Do if You're Billed for Things You Never Got, or You Get Unordered Products",
+        "publisher": "Federal Trade Commission Consumer Advice",
+        "url": "https://consumer.ftc.gov/articles/what-do-if-youre-billed-things-you-never-got-or-you-get-unordered-products",
+        "source_type": "政府消费者建议"
+      }
+    ],
+    "customer_service_summary": [
+      "美国在线购物场景下，客服应重点核对商家承诺的发货时间、退货政策、退款政策和付款方式。",
+      "如果卖家没有明确承诺发货时间，FTC 消费者建议中强调应关注 30 天发货规则和信用卡争议处理路径。",
+      "用户称未收到商品、重复扣款、收到错误或缺陷商品时，AI 应先建议保留订单、物流、沟通和支付记录，并转人工核验。"
+    ],
+    "standard_handling": [
+      "确认订单号、承诺发货时间、实际物流状态、支付方式和用户诉求。",
+      "检查平台自身退款/退货政策是否适用，不直接把 FTC 资料当作平台承诺。",
+      "涉及未收到货、重复扣款、错误商品、缺陷商品时，创建售后或支付争议工单。",
+      "回复中说明将根据平台政策、订单记录和适用地区规则核验处理。"
+    ],
+    "answer_boundaries": [
+      "不能承诺一定退款或一定赔偿。",
+      "不能把 FTC 消费者建议当作所有地区、所有平台的统一政策。",
+      "不能要求用户在公开聊天里提供完整信用卡号、银行账号等敏感信息。"
+    ],
+    "escalation_triggers": [
+      "用户称商品未收到但已扣款。",
+      "用户称被重复扣款、收到未订购商品或疑似欺诈。",
+      "涉及信用卡争议、监管投诉或法律风险。"
+    ],
+    "sample_questions": [
+      "美国网购商品一直没发货怎么办？",
+      "我被扣款了但没有收到商品，可以怎么处理？",
+      "商家不退款，我是否需要保留哪些证据？"
+    ],
+    "update_note": "该文档用于美国在线购物售后处理参考，不能替代平台自身政策或法律意见。"
+  },
+  {
+    "doc_id": "us_ftc_cooling_off_rule_reference",
+    "title": "美国 FTC Cooling-Off Rule 客服参考",
+    "business_area": "售后",
+    "risk_level": "high",
+    "jurisdiction": "美国",
+    "source_path": "data/knowledge_base/markdown/authoritative/us_ftc_cooling_off_rule_reference.md",
+    "authority_sources": [
+      {
+        "name": "Buyer's Remorse: The FTC's Cooling-Off Rule May Help",
+        "publisher": "Federal Trade Commission Consumer Advice",
+        "url": "https://consumer.ftc.gov/articles/buyers-remorse-ftcs-cooling-rule-may-help",
+        "source_type": "政府消费者建议"
+      },
+      {
+        "name": "16 CFR Part 429 - Rule Concerning Cooling-off Period for Sales Made at Homes or at Certain Other Locations",
+        "publisher": "Electronic Code of Federal Regulations",
+        "url": "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-429",
+        "source_type": "联邦法规在线版本"
+      }
+    ],
+    "customer_service_summary": [
+      "Cooling-Off Rule 主要针对上门、工作场所、宿舍或临时地点等特定销售场景，不等于普通网购都能三天无理由取消。",
+      "用户提到上门推销、展会、酒店会议、临时摊位等购买场景时，应识别为高风险合规问题。",
+      "AI 可以解释适用范围需要核验，但不能直接认定某笔交易一定适用或不适用。"
+    ],
+    "standard_handling": [
+      "确认销售发生地点、购买金额、商品/服务类型、签约时间和卖家是否提供取消通知。",
+      "如果可能涉及 Cooling-Off Rule，创建高风险人工审核工单。",
+      "要求用户保留合同、收据、取消通知、销售人员信息和沟通记录。",
+      "回复中说明将由人工根据交易地点、合同材料和适用规则核验。"
+    ],
+    "answer_boundaries": [
+      "不能把 Cooling-Off Rule 解释成普通线上订单一律可三天取消。",
+      "不能给出法律结论或替用户起草法律文书。",
+      "不能承诺一定取消成功或一定退款。"
+    ],
+    "escalation_triggers": [
+      "上门销售、临时地点销售、展会销售、宿舍/工作场所销售。",
+      "用户提到 Cooling-Off、三天取消、FTC、律师或监管投诉。",
+      "用户要求赔偿、撤销合同或投诉销售欺诈。"
+    ],
+    "sample_questions": [
+      "美国上门推销买的东西可以三天内取消吗？",
+      "Cooling-Off Rule 是否适用于普通网购？",
+      "销售人员没有告诉我取消权怎么办？"
+    ],
+    "update_note": "该文档用于美国特定销售场景合规参考，具体适用性必须人工核验。"
+  },
+  {
+    "doc_id": "us_ecfr_mail_internet_order_rule_reference",
+    "title": "美国 eCFR Mail, Internet, or Telephone Order Merchandise Rule 参考",
+    "business_area": "物流",
+    "risk_level": "high",
+    "jurisdiction": "美国",
+    "source_path": "data/knowledge_base/markdown/authoritative/us_ecfr_mail_internet_order_rule_reference.md",
+    "authority_sources": [
+      {
+        "name": "16 CFR Part 435 - Mail, Internet, or Telephone Order Merchandise",
+        "publisher": "Electronic Code of Federal Regulations",
+        "url": "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-435",
+        "source_type": "联邦法规在线版本"
+      },
+      {
+        "name": "Business Guide to the FTC's Mail, Internet, or Telephone Order Merchandise Rule",
+        "publisher": "Federal Trade Commission Business Guidance",
+        "url": "https://www.ftc.gov/business-guidance/resources/business-guide-ftcs-mail-internet-or-telephone-order-merchandise-rule",
+        "source_type": "政府商业合规指南"
+      }
+    ],
+    "customer_service_summary": [
+      "该规则与邮购、电话和互联网订购商品的发货承诺、延期通知、取消和退款有关。",
+      "如果卖家无法按承诺时间发货，通常需要通知买方并处理延期同意或取消退款问题。",
+      "客服在美国订单履约争议中应记录承诺发货时间、实际延期原因、通知记录和退款诉求。"
+    ],
+    "standard_handling": [
+      "核对商品是否属于订单商品、下单时间、付款时间、承诺发货时间和实际物流节点。",
+      "如果发货延期，检查是否已通知用户并提供取消或继续等待选项。",
+      "用户要求退款或投诉发货欺诈时，创建物流/售后高风险工单。",
+      "对外回复时区分平台政策、商家承诺和美国规则参考。"
+    ],
+    "answer_boundaries": [
+      "不能仅凭用户描述认定商家违法。",
+      "不能把美国规则套用于中国大陆或其他地区订单。",
+      "不能承诺监管处罚或法律赔偿结果。"
+    ],
+    "escalation_triggers": [
+      "美国订单未按承诺发货且用户要求取消或退款。",
+      "用户提到 FTC、Mail Order Rule、监管投诉、欺诈。",
+      "商家多次延期或无法提供明确发货时间。"
+    ],
+    "sample_questions": [
+      "美国网购商家没有承诺发货时间，一般多久应发货？",
+      "商家发货延期时是否需要通知用户？",
+      "订单一直不发货，用户要求取消退款怎么办？"
+    ],
+    "update_note": "该文档用于美国订单履约合规参考，eCFR 为持续更新在线版本，具体法律判断需人工审核。"
+  },
+  {
+    "doc_id": "us_cfpb_financial_complaint_reference",
+    "title": "美国 CFPB 金融消费者投诉数据库参考",
+    "business_area": "投诉",
+    "risk_level": "high",
+    "jurisdiction": "美国",
+    "source_path": "data/knowledge_base/markdown/authoritative/us_cfpb_financial_complaint_reference.md",
+    "authority_sources": [
+      {
+        "name": "Consumer Complaint Database",
+        "publisher": "Consumer Financial Protection Bureau",
+        "url": "https://www.consumerfinance.gov/data-research/consumer-complaints/",
+        "source_type": "政府公开投诉数据库"
+      },
+      {
+        "name": "Submit a complaint",
+        "publisher": "Consumer Financial Protection Bureau",
+        "url": "https://www.consumerfinance.gov/complaint/",
+        "source_type": "政府投诉流程说明"
+      }
+    ],
+    "customer_service_summary": [
+      "CFPB 数据库适合了解金融消费者投诉类别、公开流程和投诉案例趋势，不适合直接当作电商平台退款政策。",
+      "用户涉及信用卡、贷款、银行账户、支付争议、征信等金融问题时，应进入高风险人工审核。",
+      "AI 可以提示用户保留交易、账单、沟通记录，但不能代表 CFPB 接收投诉或判断投诉结果。"
+    ],
+    "standard_handling": [
+      "识别是否属于金融产品或金融服务投诉。",
+      "记录支付方式、账单日期、争议金额、商户名称和用户已联系机构的情况。",
+      "如果涉及信用卡拒付、金融机构、征信、贷款或监管投诉，创建高风险工单。",
+      "回复中说明平台会先核验订单和支付记录，外部监管投诉流程需用户自行按官方渠道处理。"
+    ],
+    "answer_boundaries": [
+      "不能把 CFPB 投诉案例当作平台政策依据。",
+      "不能承诺 CFPB 会受理或公司会被处罚。",
+      "不能收集完整卡号、银行账号、SSN 等敏感金融信息。"
+    ],
+    "escalation_triggers": [
+      "用户提到 CFPB、金融监管、信用卡拒付、银行投诉。",
+      "涉及征信、贷款、银行账户、支付争议或欺诈。",
+      "用户要求监管部门介入或法律处理。"
+    ],
+    "sample_questions": [
+      "CFPB 投诉数据库能不能当作退款政策依据？",
+      "美国信用卡扣款争议应该怎么记录？",
+      "用户说要向 CFPB 投诉，客服应该怎么处理？"
+    ],
+    "update_note": "该文档用于金融投诉识别和风险升级参考，不用于生成具体法律或监管结论。"
+  },
+  {
+    "doc_id": "woocommerce_order_refund_reference",
+    "title": "WooCommerce 订单退款操作参考",
+    "business_area": "售后",
+    "risk_level": "normal",
+    "jurisdiction": "电商平台通用",
+    "source_path": "data/knowledge_base/markdown/authoritative/woocommerce_order_refund_reference.md",
+    "authority_sources": [
+      {
+        "name": "Refunding Orders in WooCommerce",
+        "publisher": "WooCommerce Documentation",
+        "url": "https://woocommerce.com/document/woocommerce-refunds/",
+        "source_type": "平台官方文档"
+      },
+      {
+        "name": "WooCommerce REST API Documentation",
+        "publisher": "WooCommerce Developer Docs",
+        "url": "https://woocommerce.github.io/woocommerce-rest-api-docs/",
+        "source_type": "平台开发者文档"
+      }
+    ],
+    "customer_service_summary": [
+      "WooCommerce 资料适合做电商订单、退款和后台操作流程参考，不是消费者权益法律文本。",
+      "退款处理应区分手动退款、支付网关退款、部分退款、库存回补和订单备注。",
+      "客服 Agent 可根据这些资料理解订单退款操作链路，但最终仍要依据本项目平台政策和真实订单状态。"
+    ],
+    "standard_handling": [
+      "确认订单状态、支付方式、可退款金额、退款原因和是否需要退回库存。",
+      "如果是后台操作问题，记录订单号、退款金额、退款原因和支付网关。",
+      "如果用户要求立即到账，说明到账时间受支付渠道影响，不能直接承诺。",
+      "涉及大额退款、重复退款、支付网关失败时创建人工工单。"
+    ],
+    "answer_boundaries": [
+      "不能把 WooCommerce 操作文档当作本平台对用户的退款承诺。",
+      "不能在未核验订单和支付渠道前承诺退款成功。",
+      "不能暴露后台密钥、API key 或管理员操作权限。"
+    ],
+    "escalation_triggers": [
+      "退款金额异常、重复退款、支付网关失败。",
+      "用户投诉不到账或要求赔偿。",
+      "后台订单状态和支付状态不一致。"
+    ],
+    "sample_questions": [
+      "WooCommerce 后台怎么给订单退款？",
+      "WooCommerce 可以部分退款吗？",
+      "退款后订单状态为什么还没有变化？"
+    ],
+    "update_note": "该文档用于电商后台流程参考，不替代项目自己的售后政策。"
+  },
+  {
+    "doc_id": "woocommerce_order_status_reference",
+    "title": "WooCommerce 订单状态与异常处理参考",
+    "business_area": "订单",
+    "risk_level": "normal",
+    "jurisdiction": "电商平台通用",
+    "source_path": "data/knowledge_base/markdown/authoritative/woocommerce_order_status_reference.md",
+    "authority_sources": [
+      {
+        "name": "Managing orders",
+        "publisher": "WooCommerce Documentation",
+        "url": "https://woocommerce.com/document/managing-orders/",
+        "source_type": "平台官方文档"
+      },
+      {
+        "name": "Order Statuses",
+        "publisher": "WooCommerce Documentation",
+        "url": "https://woocommerce.com/document/managing-orders/order-statuses/",
+        "source_type": "平台官方文档"
+      },
+      {
+        "name": "Troubleshooting Orders",
+        "publisher": "WooCommerce Documentation",
+        "url": "https://woocommerce.com/document/managing-orders/troubleshooting-orders/",
+        "source_type": "平台官方文档"
+      }
+    ],
+    "customer_service_summary": [
+      "WooCommerce 订单状态资料适合帮助 Agent 理解 pending、processing、completed、refunded、failed 等订单状态语义。",
+      "订单异常处理应先确认支付状态、库存、物流履约、订单备注和后台状态变更记录。",
+      "这些资料是平台操作参考，不是用户权益或合规规则。"
+    ],
+    "standard_handling": [
+      "先查询订单状态、支付状态、物流状态和最近操作记录。",
+      "根据状态判断是支付待确认、处理中、已完成、失败、取消还是已退款。",
+      "后台状态和支付/物流事实不一致时，创建人工工单。",
+      "回复用户时使用业务语言解释状态，不暴露后台内部字段。"
+    ],
+    "answer_boundaries": [
+      "不能把 WooCommerce 默认状态等同于本平台所有状态。",
+      "不能在后台和支付渠道状态不一致时直接判断责任。",
+      "不能向用户展示后台敏感操作日志或管理员信息。"
+    ],
+    "escalation_triggers": [
+      "订单状态卡住、支付成功但订单失败、库存扣减异常。",
+      "已退款状态和用户到账情况不一致。",
+      "用户要求人工、投诉或监管介入。"
+    ],
+    "sample_questions": [
+      "WooCommerce Refunded 状态是什么意思？",
+      "订单一直 Processing 应该怎么排查？",
+      "支付成功但订单失败怎么办？"
+    ],
+    "update_note": "该文档用于订单后台状态理解，具体业务状态仍以项目真实订单系统为准。"
+  }
+]

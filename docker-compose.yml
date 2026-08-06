@@ -1,4 +1,4 @@
-# 本文件定义项目本地开发依赖的 PostgreSQL 服务。
+# 本文件定义项目本地开发依赖的 PostgreSQL 和 Milvus 服务。
 # 后端通过 .env 里的 DATABASE_URL 连接数据库，首次启动后需要执行：
 # python -m alembic upgrade head
 
@@ -12,10 +12,63 @@ services:
       POSTGRES_USER: customer_service
       POSTGRES_PASSWORD: customer_service
     ports:
-      - "5432:5432"
+      # 宿主机使用 56433，避开 Windows/WSL 可能保留的 554xx 端口段和其他项目的 localhost:5432。
+      - "56433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  # Milvus 依赖的元数据存储：Milvus 用它保存 collection、segment 等内部状态。
+  milvus-etcd:
+    image: quay.io/coreos/etcd:v3.5.18
+    container_name: ai-customer-service-milvus-etcd
+    command:
+      - etcd
+      - --advertise-client-urls=http://127.0.0.1:2379
+      - --listen-client-urls=http://0.0.0.0:2379
+      - --data-dir=/etcd
+    volumes:
+      - milvus_etcd_data:/etcd
+
+  # Milvus 依赖的对象存储：向量索引、日志和中间数据会落到这里。
+  milvus-minio:
+    image: minio/minio:RELEASE.2024-05-28T17-19-04Z
+    container_name: ai-customer-service-milvus-minio
+    environment:
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin
+    command: minio server /minio_data --console-address ":9001"
+    ports:
+      # 使用较高端口，避免和其他项目常见的 9000/9001 冲突。
+      - "59000:9000"
+      - "59001:9001"
+    volumes:
+      - milvus_minio_data:/minio_data
+
+  # Milvus 向量数据库：保存 RAG chunks 的 embedding，用于在线语义检索。
+  milvus:
+    image: milvusdb/milvus:v2.4.15
+    container_name: ai-customer-service-milvus
+    command: ["milvus", "run", "standalone"]
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      ETCD_ENDPOINTS: milvus-etcd:2379
+      MINIO_ADDRESS: milvus-minio:9000
+    ports:
+      # .env 中 MILVUS_URI 默认使用 http://localhost:19531。
+      - "19531:19530"
+      # Milvus 内置健康/管理端口，使用高端口避免和旧容器 9091/9092 冲突。
+      - "59091:9091"
+    volumes:
+      - milvus_data:/var/lib/milvus
+    depends_on:
+      - milvus-etcd
+      - milvus-minio
 
 volumes:
   # 持久化 PostgreSQL 数据：容器删除后数据卷仍然可以保留。
   postgres_data:
+  # 持久化 Milvus 依赖数据：避免每次重启都丢失向量库内部状态。
+  milvus_etcd_data:
+  milvus_minio_data:
+  milvus_data:

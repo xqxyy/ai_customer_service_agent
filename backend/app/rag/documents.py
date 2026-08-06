@@ -26,7 +26,3 @@ def load_processed_documents() -> list[dict]:
                 documents.append(json.loads(line))
 
     return documents
-
-
-# 模块级文档缓存：/workbench/state 直接读取它，减少每次请求重复读文件
-DOCUMENTS = load_processed_documents()

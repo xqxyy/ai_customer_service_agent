@@ -132,6 +132,73 @@
     "should_hit": true
   },
   {
+    "id": "rag_cn_seven_day_return_001",
+    "question": "网购商品七日无理由退货有哪些例外情况？",
+    "expected_doc_ids": ["cn_seven_day_return_reference"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_cn_express_001",
+    "question": "快递显示已签收但用户说没有收到，客服应该怎么处理？",
+    "expected_doc_ids": ["cn_express_delivery_reference"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_cn_invoice_001",
+    "question": "数电发票抬头开错了，用户要求重开发票时怎么处理？",
+    "expected_doc_ids": ["cn_digital_invoice_reference", "invoice_policy"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_cn_privacy_001",
+    "question": "根据个人信息保护要求，用户要求删除个人信息时客服应该怎么处理？",
+    "expected_doc_ids": ["cn_personal_information_reference", "privacy_request_scan"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_cn_complaint_001",
+    "question": "用户投诉并要求监管部门介入时，客服能不能直接承诺赔偿？",
+    "expected_doc_ids": [
+      "cn_customer_complaint_escalation_reference",
+      "cn_consumer_rights_after_sales_reference",
+      "complaint_policy"
+    ],
+    "should_hit": true
+  },
+  {
+    "id": "rag_us_ftc_online_shopping_001",
+    "question": "美国网购商品一直没有按承诺时间发货，客服应该怎么处理？",
+    "expected_doc_ids": [
+      "us_ftc_online_shopping_delivery_refunds_reference",
+      "us_ecfr_mail_internet_order_rule_reference"
+    ],
+    "should_hit": true
+  },
+  {
+    "id": "rag_us_ftc_cooling_off_001",
+    "question": "美国上门推销买的东西可以按照 Cooling-Off Rule 三天内取消吗？",
+    "expected_doc_ids": ["us_ftc_cooling_off_rule_reference"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_us_cfpb_001",
+    "question": "CFPB 投诉数据库能不能直接当作电商平台退款政策依据？",
+    "expected_doc_ids": ["us_cfpb_financial_complaint_reference"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_woocommerce_refund_001",
+    "question": "WooCommerce 后台给订单退款时需要注意什么？",
+    "expected_doc_ids": ["woocommerce_order_refund_reference"],
+    "should_hit": true
+  },
+  {
+    "id": "rag_woocommerce_status_001",
+    "question": "WooCommerce Refunded 订单状态代表什么，异常时怎么排查？",
+    "expected_doc_ids": ["woocommerce_order_status_reference"],
+    "should_hit": true
+  },
+  {
     "id": "rag_unknown_001",
     "question": "你们能帮我安装电脑系统吗？",
     "expected_doc_ids": [],

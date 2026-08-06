@@ -10,6 +10,7 @@
     python -m backend.app.evals.run_customer_service_eval
 """
 
+import argparse
 import json
 from pathlib import Path
 
@@ -31,9 +32,9 @@ EVAL_FILE = (
 )
 
 
-# 读取 Agent 评估用例
-def load_eval_cases() -> list[dict]:
-    with EVAL_FILE.open("r", encoding="utf-8") as file:
+# 读取 Agent 评估用例；默认读项目小验证集，也可以用 --eval-file 指向公开数据生成的大验证集
+def load_eval_cases(eval_file: Path = EVAL_FILE) -> list[dict]:
+    with eval_file.open("r", encoding="utf-8") as file:
         return json.load(file)
 
 
@@ -150,10 +151,23 @@ def print_report(results: list[dict]):
         print()
 
 
+# 解析命令行参数，让公开数据生成的评估集可以单独运行，不覆盖手写核心评估集
+def parse_args():
+    parser = argparse.ArgumentParser(description="运行客服 Agent 端到端评估")
+    parser.add_argument(
+        "--eval-file",
+        type=Path,
+        default=EVAL_FILE,
+        help="评估集 JSON 路径，默认使用 backend/app/data/eval/customer_service_eval.json",
+    )
+    return parser.parse_args()
+
+
 # 脚本入口：初始化数据库、创建 Agent、执行全部评估用例
 def main():
+    args = parse_args()
     init_db()
-    cases = load_eval_cases()
+    cases = load_eval_cases(args.eval_file)
     agent = CustomerServiceAgent()
 
     results = []

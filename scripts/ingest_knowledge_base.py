@@ -90,6 +90,8 @@ def insert_chunks(client, chunks: list[dict]):
                 "doc_type": chunk.get("doc_type", ""),
                 "business_area": chunk.get("business_area", ""),
                 "risk_level": chunk.get("risk_level", "normal"),
+                "source_kind": chunk.get("source_kind", ""),
+                "jurisdiction": chunk.get("jurisdiction", ""),
                 "content": chunk["content"],
                 "chunk_id": chunk["chunk_id"],
             }

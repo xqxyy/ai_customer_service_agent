@@ -205,5 +205,148 @@
     "business_area": "隐私",
     "risk_level": "high",
     "need_ocr": true
+  },
+  {
+    "doc_id": "cn_consumer_rights_after_sales_reference",
+    "title": "中国消费者权益与售后争议处理参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_consumer_rights_after_sales_reference.md",
+    "doc_type": "markdown",
+    "business_area": "售后",
+    "risk_level": "high",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "中国大陆"
+  },
+  {
+    "doc_id": "cn_seven_day_return_reference",
+    "title": "网络购买商品七日无理由退货参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_seven_day_return_reference.md",
+    "doc_type": "markdown",
+    "business_area": "售后",
+    "risk_level": "normal",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "中国大陆"
+  },
+  {
+    "doc_id": "cn_ecommerce_platform_reference",
+    "title": "中国电子商务平台经营与订单履约参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_ecommerce_platform_reference.md",
+    "doc_type": "markdown",
+    "business_area": "订单",
+    "risk_level": "normal",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "中国大陆"
+  },
+  {
+    "doc_id": "cn_express_delivery_reference",
+    "title": "中国快递服务与物流异常处理参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_express_delivery_reference.md",
+    "doc_type": "markdown",
+    "business_area": "物流",
+    "risk_level": "normal",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "中国大陆"
+  },
+  {
+    "doc_id": "cn_digital_invoice_reference",
+    "title": "中国数电发票与发票客服处理参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_digital_invoice_reference.md",
+    "doc_type": "markdown",
+    "business_area": "财务",
+    "risk_level": "normal",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "中国大陆"
+  },
+  {
+    "doc_id": "cn_personal_information_reference",
+    "title": "中国个人信息保护与隐私请求处理参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_personal_information_reference.md",
+    "doc_type": "markdown",
+    "business_area": "隐私",
+    "risk_level": "high",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "中国大陆"
+  },
+  {
+    "doc_id": "cn_customer_complaint_escalation_reference",
+    "title": "中国客服投诉升级与监管争议处理参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/cn_customer_complaint_escalation_reference.md",
+    "doc_type": "markdown",
+    "business_area": "投诉",
+    "risk_level": "high",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "中国大陆"
+  },
+  {
+    "doc_id": "us_ftc_online_shopping_delivery_refunds_reference",
+    "title": "美国 FTC 在线购物交付、退货与退款参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/us_ftc_online_shopping_delivery_refunds_reference.md",
+    "doc_type": "markdown",
+    "business_area": "售后",
+    "risk_level": "normal",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "美国"
+  },
+  {
+    "doc_id": "us_ftc_cooling_off_rule_reference",
+    "title": "美国 FTC Cooling-Off Rule 客服参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/us_ftc_cooling_off_rule_reference.md",
+    "doc_type": "markdown",
+    "business_area": "售后",
+    "risk_level": "high",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "美国"
+  },
+  {
+    "doc_id": "us_ecfr_mail_internet_order_rule_reference",
+    "title": "美国 eCFR Mail, Internet, or Telephone Order Merchandise Rule 参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/us_ecfr_mail_internet_order_rule_reference.md",
+    "doc_type": "markdown",
+    "business_area": "物流",
+    "risk_level": "high",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "美国"
+  },
+  {
+    "doc_id": "us_cfpb_financial_complaint_reference",
+    "title": "美国 CFPB 金融消费者投诉数据库参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/us_cfpb_financial_complaint_reference.md",
+    "doc_type": "markdown",
+    "business_area": "投诉",
+    "risk_level": "high",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "美国"
+  },
+  {
+    "doc_id": "woocommerce_order_refund_reference",
+    "title": "WooCommerce 订单退款操作参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/woocommerce_order_refund_reference.md",
+    "doc_type": "markdown",
+    "business_area": "售后",
+    "risk_level": "normal",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "电商平台通用"
+  },
+  {
+    "doc_id": "woocommerce_order_status_reference",
+    "title": "WooCommerce 订单状态与异常处理参考",
+    "source_path": "data/knowledge_base/markdown/authoritative/woocommerce_order_status_reference.md",
+    "doc_type": "markdown",
+    "business_area": "订单",
+    "risk_level": "normal",
+    "need_ocr": false,
+    "source_kind": "authoritative_reference",
+    "jurisdiction": "电商平台通用"
   }
 ]

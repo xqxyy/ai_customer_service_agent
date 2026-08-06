@@ -336,6 +336,8 @@ class CustomerServiceAgent:
                         "doc_type": doc.get("doc_type", ""),
                         "business_area": doc.get("business_area", ""),
                         "risk_level": doc.get("risk_level", ""),
+                        "source_kind": doc.get("source_kind", ""),
+                        "jurisdiction": doc.get("jurisdiction", ""),
                         "score": doc.get("score", 0),
                     }
                 )

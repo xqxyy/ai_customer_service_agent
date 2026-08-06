@@ -19,13 +19,26 @@ HIGH_RISK_RULES = [
     {"keyword": "账号被盗", "risk_level": "high", "reason": "账号安全问题需要人工核验"},
     {"keyword": "账号异常", "risk_level": "high", "reason": "账号异常需要人工核验"},
     {"keyword": "人工处理", "risk_level": "high", "reason": "用户明确要求人工处理"},
+    {"keyword": "complaint", "risk_level": "high", "reason": "用户投诉需要人工审核"},
+    {"keyword": "compensation", "risk_level": "high", "reason": "赔偿不能由 AI 直接承诺"},
+    {"keyword": "lawyer", "risk_level": "high", "reason": "法律风险需要人工处理"},
+    {"keyword": "legal", "risk_level": "high", "reason": "法律风险需要人工处理"},
+    {"keyword": "lawsuit", "risk_level": "high", "reason": "法律风险需要人工处理"},
+    {"keyword": "privacy", "risk_level": "high", "reason": "隐私问题需要人工处理"},
+    {"keyword": "data leak", "risk_level": "high", "reason": "隐私泄露风险需要人工处理"},
+    {"keyword": "data breach", "risk_level": "high", "reason": "隐私泄露风险需要人工处理"},
+    {"keyword": "account hacked", "risk_level": "high", "reason": "账号安全问题需要人工核验"},
+    {"keyword": "fraud", "risk_level": "high", "reason": "欺诈风险需要人工核验"},
+    {"keyword": "chargeback", "risk_level": "high", "reason": "支付争议需要人工处理"},
 ]
 
 
 # 检测用户消息是否命中高风险规则，返回完整风险结果供 Agent 和工单使用
 def detect_risk(message: str) -> dict:
+    normalized_message = message.lower()
+
     for rule in HIGH_RISK_RULES:
-        if rule["keyword"] in message:
+        if rule["keyword"] in normalized_message or rule["keyword"] in message:
             return {
                 "risk_level": rule["risk_level"],
                 "reason": rule["reason"],
