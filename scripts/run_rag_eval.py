@@ -9,6 +9,7 @@ RAG 检索评估脚本
 """
 
 import json
+from datetime import datetime
 from pathlib import Path
 
 from backend.app.rag.retriever import search_documents
@@ -17,6 +18,7 @@ from backend.app.rag.retriever import search_documents
 # 评估集路径：每条用例包含问题、预期 doc_id，以及是否应该命中
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 EVAL_FILE = PROJECT_ROOT / "data" / "eval" / "rag_eval.json"
+REPORT_FILE = PROJECT_ROOT / "data" / "processed" / "rag_eval_report.json"
 
 
 # 读取 RAG 评估用例
@@ -53,25 +55,76 @@ def evaluate_case(case: dict) -> dict:
     }
 
 
-# 打印评估报告：展示整体通过率、命中率和每条用例的实际命中文档
-def print_report(results: list[dict]):
+# 汇总评估指标：供终端输出和工作台报告复用。
+def build_summary(results: list[dict]) -> dict:
     total = len(results)
     passed = sum(1 for item in results if item["passed"])
 
     hit_cases = [item for item in results if item["should_hit"]]
     no_hit_cases = [item for item in results if not item["should_hit"]]
 
-    top1_rate = sum(1 for item in hit_cases if item["top1_hit"]) / len(hit_cases)
-    top3_rate = sum(1 for item in hit_cases if item["top3_hit"]) / len(hit_cases)
-    no_answer_accuracy = sum(1 for item in no_hit_cases if item["passed"]) / len(no_hit_cases)
-    avg_top_score = sum(item["top_score"] for item in results) / total
+    top1_rate = (
+        sum(1 for item in hit_cases if item["top1_hit"]) / len(hit_cases)
+        if hit_cases
+        else 0
+    )
+    top3_rate = (
+        sum(1 for item in hit_cases if item["top3_hit"]) / len(hit_cases)
+        if hit_cases
+        else 0
+    )
+    no_answer_accuracy = (
+        sum(1 for item in no_hit_cases if item["passed"]) / len(no_hit_cases)
+        if no_hit_cases
+        else 0
+    )
+    avg_top_score = sum(item["top_score"] for item in results) / total if total else 0
+
+    return {
+        "total": total,
+        "passed": passed,
+        "failed": total - passed,
+        "pass_rate": passed / total if total else 0,
+        "hit_cases": len(hit_cases),
+        "no_hit_cases": len(no_hit_cases),
+        "top1_hit_rate": top1_rate,
+        "top3_hit_rate": top3_rate,
+        "no_answer_accuracy": no_answer_accuracy,
+        "avg_top_score": avg_top_score,
+    }
+
+
+# 把评估结果保存成 JSON 报告，供工作台读取和后续版本对比。
+def write_report(results: list[dict], summary: dict):
+    REPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    REPORT_FILE.write_text(
+        json.dumps(
+            {
+                "name": "rag_eval",
+                "generated_at": datetime.now().isoformat(),
+                "eval_file": str(EVAL_FILE.relative_to(PROJECT_ROOT)),
+                "summary": summary,
+                "cases": results,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+
+# 打印评估报告：展示整体通过率、命中率和每条用例的实际命中文档
+def print_report(results: list[dict], summary: dict):
+    total = summary["total"]
+    passed = summary["passed"]
 
     print("\n=== RAG Eval ===")
     print(f"case_pass_rate: {passed}/{total}")
-    print(f"top1_hit_rate: {top1_rate:.2%}")
-    print(f"top3_hit_rate: {top3_rate:.2%}")
-    print(f"no_answer_accuracy: {no_answer_accuracy:.2%}")
-    print(f"avg_top_score: {avg_top_score:.4f}\n")
+    print(f"top1_hit_rate: {summary['top1_hit_rate']:.2%}")
+    print(f"top3_hit_rate: {summary['top3_hit_rate']:.2%}")
+    print(f"no_answer_accuracy: {summary['no_answer_accuracy']:.2%}")
+    print(f"avg_top_score: {summary['avg_top_score']:.4f}")
+    print(f"report_file: {REPORT_FILE}\n")
 
     for item in results:
         mark = "PASS" if item["passed"] else "FAIL"
@@ -86,7 +139,9 @@ def print_report(results: list[dict]):
 def main():
     cases = load_cases()
     results = [evaluate_case(case) for case in cases]
-    print_report(results)
+    summary = build_summary(results)
+    write_report(results, summary)
+    print_report(results, summary)
 
 
 if __name__ == "__main__":

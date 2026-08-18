@@ -18,6 +18,7 @@ from backend.app.db.session import (
     check_database_health,
     get_agent_run,
     init_db,
+    list_agent_runs,
     list_message_sources_by_run_id,
     list_messages,
     list_messages_by_run_id,
@@ -26,9 +27,12 @@ from backend.app.db.session import (
     list_tool_calls_by_run_id,
     update_ticket_status,
 )
+from backend.app.evals.reports import load_eval_reports
+from backend.app.prompts import get_prompt_templates
 from backend.app.rag.documents import load_processed_documents
 from backend.app.rag.retriever import check_milvus_health
 from backend.app.schemas.chat import ChatRequest, ChatResponse
+from backend.app.tools.registry import get_tool_specs
 
 
 # 静态资源目录：工作台页面和前端脚本都放在 backend/app/static 下
@@ -72,6 +76,12 @@ def workbench():
     return FileResponse(STATIC_DIR / "index.html")
 
 
+# Agent Run 详情页：比 JSON 接口更适合人工复盘一次完整执行链路。
+@app.get("/agent-runs/{run_id}/view", include_in_schema=False)
+def agent_run_view(run_id: str):
+    return FileResponse(STATIC_DIR / "agent_run.html")
+
+
 # 工作台数据接口：一次性返回聊天、工单、工具日志和知识库文档列表。
 @app.get("/workbench/state")
 def workbench_state():
@@ -79,8 +89,34 @@ def workbench_state():
         "messages": list_messages(),
         "tickets": list_tickets(),
         "tool_calls": list_tool_calls(),
+        "agent_runs": list_agent_runs(),
+        "prompt_templates": get_prompt_templates(),
+        "eval_reports": load_eval_reports(),
+        "tool_specs": get_tool_specs(),
         # 每次请求读取最新 documents.jsonl，避免重建 RAG 后工作台仍显示旧知识库清单。
         "documents": load_processed_documents(),
+    }
+
+
+# 工具规格接口：展示每个 Tool 的用途、入参、出参和错误码。
+@app.get("/tool-specs")
+def tool_specs():
+    return {
+        "tools": get_tool_specs(),
+    }
+
+
+# 评估报告摘要接口：工作台和调试脚本都可以直接读取最近一次 eval 结果。
+@app.get("/eval-reports")
+def eval_reports():
+    return load_eval_reports()
+
+
+# Prompt 模板接口：面试或调试时可以直接查看 Agent 的角色、工具路由、RAG 和风险规则模板。
+@app.get("/prompt-templates")
+def prompt_templates():
+    return {
+        "templates": get_prompt_templates(),
     }
 
 

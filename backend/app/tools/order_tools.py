@@ -5,9 +5,9 @@
 存在的原因是：订单状态属于业务系统数据，不应该让大模型凭空回答，而应该通过工具查询后再回复。当前使用模拟订单，后续可以替换成真实订单系统接口。
 """
 
-import json
-
 from langchain_core.tools import tool
+
+from backend.app.tools.schemas import ToolTimer, tool_error, tool_success, validate_required_text
 
 
 # 模拟订单数据：用于展示 Agent 如何调用业务工具查询订单
@@ -35,21 +35,34 @@ def get_latest_order(user_id: str) -> str:
     Returns:
         JSON 字符串，包含是否找到订单以及订单详情。
     """
+    timer = ToolTimer()
+    user_id, error_code = validate_required_text(user_id, "user_id")
+
+    if error_code:
+        return tool_error(
+            error_code=error_code,
+            status="validation_error",
+            message="user_id 不能为空，无法查询订单。",
+            timer=timer,
+            found=False,
+        )
+
     orders = ORDERS.get(user_id, [])
 
     if not orders:
-        return json.dumps(
-            {
-                "found": False,
-                "message": "没有找到订单",
-            },
-            ensure_ascii=False,
+        return tool_success(
+            status="not_found",
+            message="没有找到订单",
+            data={"user_id": user_id},
+            timer=timer,
+            found=False,
         )
 
-    return json.dumps(
-        {
-            "found": True,
-            "order": orders[0],
-        },
-        ensure_ascii=False,
+    return tool_success(
+        status="found",
+        message="已找到最近订单",
+        data={"order": orders[0]},
+        timer=timer,
+        found=True,
+        order=orders[0],
     )

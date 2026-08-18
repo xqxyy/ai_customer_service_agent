@@ -5,12 +5,12 @@
 存在的原因是：客服项目不应该只给一句回答，还要能把需要人工介入的问题沉淀成可跟进的业务记录
 """
 
-import json
 from datetime import datetime
 
 from langchain_core.tools import tool
 
 from backend.app.db.session import save_ticket
+from backend.app.tools.schemas import ToolTimer, tool_error, tool_success, validate_required_text
 
 
 # 内存工单列表：保留给调试观察；真正可靠的数据会同步写入数据库 tickets 表，可删
@@ -45,6 +45,43 @@ def create_ticket(
     Returns:
         JSON 字符串，包含工单创建结果和工单详情
     """
+    timer = ToolTimer()
+    session_id, session_error = validate_required_text(session_id, "session_id")
+    user_id, user_error = validate_required_text(user_id, "user_id")
+    title, title_error = validate_required_text(title, "title")
+    description, description_error = validate_required_text(description, "description")
+
+    error_code = session_error or user_error or title_error or description_error
+    if error_code:
+        return tool_error(
+            error_code=error_code,
+            status="validation_error",
+            message="工单必填参数缺失，无法创建工单。",
+            timer=timer,
+            created=False,
+        )
+
+    allowed_priorities = {"low", "normal", "high", "urgent"}
+    allowed_risk_levels = {"normal", "medium", "high"}
+
+    if priority not in allowed_priorities:
+        return tool_error(
+            error_code="invalid_priority",
+            status="validation_error",
+            message="工单优先级不合法。",
+            timer=timer,
+            created=False,
+        )
+
+    if risk_level not in allowed_risk_levels:
+        return tool_error(
+            error_code="invalid_risk_level",
+            status="validation_error",
+            message="工单风险等级不合法。",
+            timer=timer,
+            created=False,
+        )
+
     ticket_id = f"TICKET-{datetime.now().strftime('%Y%m%d%H%M%S%f')}"
     status = "pending_review" if risk_level == "high" else "open"       #高风险问题 -> 待人工审核
 
@@ -61,14 +98,27 @@ def create_ticket(
         "status": status,
     }
 
-    TICKETS.append(ticket)
-    #把工单保存到数据库
-    save_ticket(ticket)
+    try:
+        #把工单保存到数据库
+        save_ticket(ticket)
+    except Exception as error:
+        return tool_error(
+            error_code="ticket_save_failed",
+            status="tool_error",
+            message="工单保存失败，请稍后重试或转人工处理。",
+            error_detail=str(error),
+            error_type=type(error).__name__,
+            timer=timer,
+            created=False,
+        )
 
-    return json.dumps(
-        {
-            "created": True,
-            "ticket": ticket,
-        },
-        ensure_ascii=False,
+    TICKETS.append(ticket)
+
+    return tool_success(
+        status="created",
+        message="工单创建成功",
+        data={"ticket": ticket},
+        timer=timer,
+        created=True,
+        ticket=ticket,
     )

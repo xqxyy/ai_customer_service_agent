@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agent Run Trace</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body class="detail-page">
+    <main class="trace-detail-shell">
+      <header class="trace-detail-header">
+        <div>
+          <p class="eyebrow">Agent trace</p>
+          <h1>Agent Run 详情</h1>
+        </div>
+        <nav class="trace-detail-actions" aria-label="详情页操作">
+          <a class="docs-link" href="/">工作台</a>
+          <a class="docs-link" id="jsonLink" href="#">JSON</a>
+        </nav>
+      </header>
+
+      <section class="trace-detail-summary" id="runSummaryDetail"></section>
+
+      <section class="trace-detail-grid">
+        <section class="panel trace-detail-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Messages</p>
+              <h2>用户问题与最终回答</h2>
+            </div>
+          </div>
+          <div class="trace-detail-list" id="messageTimeline"></div>
+        </section>
+
+        <section class="panel trace-detail-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Tools</p>
+              <h2>工具调用时间线</h2>
+            </div>
+          </div>
+          <div class="trace-detail-list" id="toolTimeline"></div>
+        </section>
+
+        <section class="panel trace-detail-panel sources-panel">
+          <div class="panel-header">
+            <div>
+              <p class="panel-kicker">Sources</p>
+              <h2>RAG 引用来源</h2>
+            </div>
+          </div>
+          <div class="trace-detail-list" id="sourceTimeline"></div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/static/agent_run.js"></script>
+  </body>
+</html>

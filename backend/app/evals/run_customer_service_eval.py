@@ -12,6 +12,7 @@
 
 import argparse
 import json
+from datetime import datetime
 from pathlib import Path
 
 from backend.app.agents.customer_service_agent import CustomerServiceAgent
@@ -30,6 +31,8 @@ EVAL_FILE = (
     / "eval"
     / "customer_service_eval.json"
 )
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+REPORT_FILE = PROJECT_ROOT / "data" / "processed" / "customer_service_eval_report.json"
 
 
 # 读取 Agent 评估用例；默认读项目小验证集，也可以用 --eval-file 指向公开数据生成的大验证集
@@ -56,7 +59,39 @@ def evaluate_case(agent: CustomerServiceAgent, case: dict) -> dict:
         message=case["question"],
     )
 
-    response = agent.run(request)
+    expected_tools = case.get("expected_tools", [])
+    forbidden_tools = case.get("forbidden_tools", [])
+    expected_sources = case.get("expected_sources", [])
+    expected_status = case.get("expected_status")
+    should_answer = case.get("should_answer")
+
+    try:
+        response = agent.run(request)
+    except Exception as error:
+        return {
+            "id": case["id"],
+            "passed": False,
+            "question": case["question"],
+            "expected_tools": expected_tools,
+            "actual_tools": [],
+            "forbidden_tools": forbidden_tools,
+            "expected_sources": expected_sources,
+            "actual_source_ids": [],
+            "actual_sources": [],
+            "expected_status": expected_status,
+            "actual_status": "failed",
+            "should_answer": should_answer,
+            "answer": "",
+            "error": str(error),
+            "error_type": type(error).__name__,
+            "checks": {
+                "expected_tools_ok": False,
+                "forbidden_tools_ok": True,
+                "sources_ok": False,
+                "status_ok": expected_status == "failed",
+                "should_answer_ok": False,
+            },
+        }
 
     tool_calls = list_tool_calls_by_run_id(response.run_id)
     actual_tools = [
@@ -71,12 +106,6 @@ def evaluate_case(agent: CustomerServiceAgent, case: dict) -> dict:
         for source in actual_sources
         if source.get("doc_id")
     ]
-
-    expected_tools = case.get("expected_tools", [])
-    forbidden_tools = case.get("forbidden_tools", [])
-    expected_sources = case.get("expected_sources", [])
-    expected_status = case.get("expected_status")
-    should_answer = case.get("should_answer")
 
     expected_tools_ok = contains_all(expected_tools, actual_tools)
     forbidden_tools_ok = contains_none(forbidden_tools, actual_tools)
@@ -114,6 +143,8 @@ def evaluate_case(agent: CustomerServiceAgent, case: dict) -> dict:
         "actual_status": response.status,
         "should_answer": should_answer,
         "answer": response.answer,
+        "error": "",
+        "error_type": "",
         "checks": {
             "expected_tools_ok": expected_tools_ok,
             "forbidden_tools_ok": forbidden_tools_ok,
@@ -124,13 +155,52 @@ def evaluate_case(agent: CustomerServiceAgent, case: dict) -> dict:
     }
 
 
-# 打印评估报告：失败用例会输出实际回答，方便定位 Agent 行为变化
-def print_report(results: list[dict]):
+# 汇总 Agent 端到端评估结果，供终端输出和工作台报告复用。
+def build_summary(results: list[dict]) -> dict:
     passed_count = sum(1 for result in results if result["passed"])
     total_count = len(results)
 
+    status_counts = {}
+    for result in results:
+        status = result.get("actual_status") or "unknown"
+        status_counts[status] = status_counts.get(status, 0) + 1
+
+    return {
+        "total": total_count,
+        "passed": passed_count,
+        "failed": total_count - passed_count,
+        "pass_rate": passed_count / total_count if total_count else 0,
+        "status_counts": status_counts,
+    }
+
+
+# 把评估结果保存为 JSON 报告，便于复盘失败用例和工作台展示。
+def write_report(results: list[dict], summary: dict, eval_file: Path):
+    REPORT_FILE.parent.mkdir(parents=True, exist_ok=True)
+    REPORT_FILE.write_text(
+        json.dumps(
+            {
+                "name": "customer_service_agent_eval",
+                "generated_at": datetime.now().isoformat(),
+                "eval_file": str(eval_file),
+                "summary": summary,
+                "cases": results,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+
+
+# 打印评估报告：失败用例会输出实际回答，方便定位 Agent 行为变化
+def print_report(results: list[dict], summary: dict):
+    passed_count = summary["passed"]
+    total_count = summary["total"]
+
     print("\n=== Customer Service Agent Eval ===")
-    print(f"Passed: {passed_count}/{total_count}\n")
+    print(f"Passed: {passed_count}/{total_count}")
+    print(f"report_file: {REPORT_FILE}\n")
 
     for result in results:
         mark = "PASS" if result["passed"] else "FAIL"
@@ -160,6 +230,12 @@ def parse_args():
         default=EVAL_FILE,
         help="评估集 JSON 路径，默认使用 backend/app/data/eval/customer_service_eval.json",
     )
+    parser.add_argument(
+        "--limit",
+        type=int,
+        default=0,
+        help="只运行前 N 条用例，默认 0 表示运行全部。",
+    )
     return parser.parse_args()
 
 
@@ -168,13 +244,18 @@ def main():
     args = parse_args()
     init_db()
     cases = load_eval_cases(args.eval_file)
+    if args.limit > 0:
+        cases = cases[: args.limit]
+
     agent = CustomerServiceAgent()
 
     results = []
     for case in cases:
         results.append(evaluate_case(agent, case))
 
-    print_report(results)
+    summary = build_summary(results)
+    write_report(results, summary, args.eval_file)
+    print_report(results, summary)
 
 
 if __name__ == "__main__":

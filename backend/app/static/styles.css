@@ -33,6 +33,16 @@ body {
   letter-spacing: 0;
 }
 
+.detail-page {
+  overflow: auto;
+}
+
+@media (min-width: 781px) {
+  body {
+    overflow: hidden;
+  }
+}
+
 /* 表单控件基础样式：继承页面字体，保持输入框和按钮视觉一致。 */
 button,
 input,
@@ -48,7 +58,8 @@ button {
 .app-shell {
   display: grid;
   grid-template-columns: 76px minmax(0, 1fr);
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 0;
 }
 
 /* 左侧导航栏：提供不同工作台视图的切换入口。 */
@@ -99,10 +110,12 @@ button {
 .workspace {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
   width: min(1520px, 100%);
+  height: 100vh;
+  min-height: 0;
   margin: 0 auto;
-  padding: 24px;
+  padding: 16px;
 }
 
 /* 顶部栏：放置页面标题、健康状态和 OpenAPI 入口。 */
@@ -111,7 +124,7 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  padding: 6px 0 2px;
+  padding: 2px 0;
 }
 
 /* 小标题文本：用于面板类型和顶部英文识别。 */
@@ -132,13 +145,13 @@ p {
 }
 
 h1 {
-  font-size: 30px;
+  font-size: 25px;
   line-height: 1.15;
   font-weight: 760;
 }
 
 h2 {
-  font-size: 17px;
+  font-size: 15px;
   line-height: 1.25;
   font-weight: 720;
 }
@@ -158,7 +171,7 @@ h2 {
 .count-badge {
   display: inline-flex;
   align-items: center;
-  min-height: 32px;
+  min-height: 28px;
   border: 1px solid rgba(95, 195, 161, 0.34);
   border-radius: 999px;
   padding: 0 12px;
@@ -184,13 +197,95 @@ h2 {
 .control-strip {
   display: grid;
   grid-template-columns: 190px 160px minmax(0, 1fr);
-  gap: 12px;
+  gap: 10px;
   align-items: end;
-  padding: 14px;
+  padding: 10px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--panel);
   box-shadow: var(--shadow);
+}
+
+/* 演示场景区：面试时按卡片顺序展示普通 RAG、业务工具和高风险兜底。 */
+.demo-board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.scenario-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 72px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+}
+
+.scenario-card h2 {
+  max-width: 100%;
+}
+
+.scenario-card button {
+  flex: 0 0 auto;
+  min-height: 36px;
+  border: 1px solid rgba(127, 167, 217, 0.36);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--blue);
+  background: rgba(127, 167, 217, 0.08);
+}
+
+.scenario-card.risk {
+  border-color: rgba(215, 181, 109, 0.36);
+}
+
+.scenario-card.risk button {
+  border-color: rgba(215, 181, 109, 0.42);
+  color: var(--amber);
+  background: rgba(215, 181, 109, 0.08);
+}
+
+/* 运行指标条：把可运行、可观测、可评估结果放在首屏。 */
+.metrics-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.metric-card {
+  min-height: 56px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px 11px;
+  background: #14171a;
+}
+
+.metric-card span {
+  display: block;
+  color: var(--subtle);
+  font-family: "Segoe UI Mono", Consolas, monospace;
+  font-size: 12px;
+}
+
+.metric-card strong {
+  display: block;
+  margin-top: 5px;
+  color: var(--text);
+  font-size: 20px;
+  line-height: 1;
+}
+
+.metric-card.wide {
+  grid-column: span 2;
+}
+
+.metric-card.error {
+  border-color: rgba(217, 106, 124, 0.42);
 }
 
 /* 表单标签：上下排列标签和输入框，方便窄屏布局。 */
@@ -218,12 +313,12 @@ textarea {
 }
 
 input {
-  height: 40px;
+  height: 36px;
   padding: 0 12px;
 }
 
 textarea {
-  min-height: 88px;
+  min-height: 72px;
   max-height: 180px;
   resize: vertical;
   padding: 12px;
@@ -248,7 +343,7 @@ textarea:focus {
 .quick-actions button,
 .ghost-button,
 .ticket-actions button {
-  min-height: 36px;
+  min-height: 34px;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 0 12px;
@@ -267,10 +362,11 @@ textarea:focus {
 /* 主内容网格：桌面端同时展示聊天、Trace、知识库和工单。 */
 .grid {
   display: grid;
-  grid-template-columns: minmax(360px, 1.2fr) minmax(320px, 0.85fr) minmax(340px, 0.95fr);
-  grid-template-rows: minmax(360px, 1fr) 320px;
-  gap: 18px;
-  min-height: calc(100vh - 190px);
+  flex: 1;
+  grid-template-columns: minmax(420px, 1.08fr) minmax(360px, 0.92fr);
+  grid-template-rows: minmax(0, 1fr);
+  gap: 12px;
+  min-height: 0;
 }
 
 /* 面板基础样式：所有工作区卡片共享边框、背景和滚动边界。 */
@@ -286,7 +382,8 @@ textarea:focus {
 
 /* 聊天面板布局：顶部标题、中间消息流、底部输入框。 */
 .chat-panel {
-  grid-row: 1 / span 2;
+  grid-column: 1;
+  grid-row: 1;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
 }
@@ -295,42 +392,50 @@ textarea:focus {
 .insight-panel,
 .knowledge-panel,
 .ticket-panel,
+.prompt-panel,
 .eval-panel {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
 }
 
-.ticket-panel {
-  grid-column: 3;
-  grid-row: 1 / span 2;
-}
-
+.knowledge-panel,
+.ticket-panel,
+.prompt-panel,
 .eval-panel {
   display: none;
 }
 
-/* 聚焦视图布局：切换到工单/知识库/评估时隐藏不相关面板。 */
+/* 聚焦视图布局：切换到工单/知识库/Prompt/评估时隐藏不相关面板。 */
 .grid[data-view="tickets"],
 .grid[data-view="knowledge"],
+.grid[data-view="prompts"],
 .grid[data-view="evals"] {
   grid-template-columns: minmax(360px, 0.72fr) minmax(480px, 1.28fr);
-  grid-template-rows: minmax(620px, calc(100vh - 190px));
+  grid-template-rows: minmax(0, 1fr);
 }
 
 .grid[data-view="tickets"] .chat-panel,
 .grid[data-view="tickets"] .knowledge-panel,
+.grid[data-view="tickets"] .prompt-panel,
 .grid[data-view="tickets"] .eval-panel,
 .grid[data-view="knowledge"] .chat-panel,
 .grid[data-view="knowledge"] .ticket-panel,
+.grid[data-view="knowledge"] .prompt-panel,
 .grid[data-view="knowledge"] .eval-panel,
+.grid[data-view="prompts"] .chat-panel,
+.grid[data-view="prompts"] .knowledge-panel,
+.grid[data-view="prompts"] .ticket-panel,
+.grid[data-view="prompts"] .eval-panel,
 .grid[data-view="evals"] .chat-panel,
 .grid[data-view="evals"] .knowledge-panel,
+.grid[data-view="evals"] .prompt-panel,
 .grid[data-view="evals"] .ticket-panel {
   display: none;
 }
 
 .grid[data-view="tickets"] .insight-panel,
 .grid[data-view="knowledge"] .insight-panel,
+.grid[data-view="prompts"] .insight-panel,
 .grid[data-view="evals"] .insight-panel {
   grid-column: 1;
   grid-row: 1;
@@ -338,6 +443,7 @@ textarea:focus {
 
 .grid[data-view="tickets"] .ticket-panel,
 .grid[data-view="knowledge"] .knowledge-panel,
+.grid[data-view="prompts"] .prompt-panel,
 .grid[data-view="evals"] .eval-panel {
   display: grid;
   grid-column: 2;
@@ -350,34 +456,51 @@ textarea:focus {
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  min-height: 72px;
-  padding: 18px;
+  min-height: 58px;
+  padding: 13px 14px;
   border-bottom: 1px solid var(--line);
+}
+
+.panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 /* 面板滚动区域：列表内容超出时内部滚动，不撑破页面。 */
 .chat-stream,
 .trace-list,
 .knowledge-list,
-.ticket-list {
+.ticket-list,
+.prompt-list {
   min-height: 0;
   overflow: auto;
-  padding: 16px;
+  padding: 12px;
 }
 
 /* 聊天消息列表：纵向排列用户和 Agent 消息。 */
 .chat-stream {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
+}
+
+.history-note {
+  align-self: center;
+  border: 1px dashed var(--line-strong);
+  border-radius: 999px;
+  padding: 6px 11px;
+  color: var(--subtle);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 12px;
 }
 
 /* 单条聊天消息：根据角色使用不同对齐方式和边框颜色。 */
 .message {
-  width: min(86%, 720px);
+  width: min(94%, 720px);
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 12px 13px;
+  padding: 10px 12px;
   background: #14171a;
 }
 
@@ -415,8 +538,8 @@ textarea:focus {
 /* 输入区：固定在聊天面板底部，负责发送新问题。 */
 .composer {
   display: grid;
-  gap: 10px;
-  padding: 16px;
+  gap: 9px;
+  padding: 12px;
   border-top: 1px solid var(--line);
 }
 
@@ -426,7 +549,7 @@ textarea:focus {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 42px;
+  min-height: 38px;
   border: 0;
   border-radius: 8px;
   color: #07110d;
@@ -442,7 +565,9 @@ textarea:focus {
 /* 列表容器：Trace、知识库、工单和评估卡片统一纵向间距。 */
 .trace-list,
 .knowledge-list,
-.ticket-list {
+.ticket-list,
+.prompt-list,
+.eval-report-list {
   display: grid;
   align-content: start;
   gap: 12px;
@@ -454,19 +579,49 @@ textarea:focus {
   gap: 12px;
   min-height: 0;
   overflow: auto;
-  padding: 16px;
+  padding: 12px;
 }
 
 /* 列表卡片：工具调用、文档、工单、空状态和评估卡片的统一外观。 */
 .trace-item,
 .doc-item,
 .ticket-item,
+.prompt-item,
+.run-card,
 .empty-state,
 .eval-card {
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 13px;
+  padding: 11px;
   background: #14171a;
+}
+
+/* 最近 run 摘要：放在 Trace 面板顶部，面试演示时优先讲这一块。 */
+.run-summary {
+  border-bottom: 1px solid var(--line);
+  padding: 12px;
+}
+
+.run-card {
+  display: grid;
+  gap: 8px;
+}
+
+.run-link {
+  color: var(--blue);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.run-link:hover {
+  text-decoration: underline;
+}
+
+.source-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 2px;
 }
 
 /* 评估命令代码块：展示终端命令时保持等宽字体和横向滚动。 */
@@ -488,6 +643,85 @@ textarea:focus {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.8;
+}
+
+.eval-report-list {
+  margin-bottom: 2px;
+}
+
+.eval-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.eval-metrics div {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px;
+  background: #101316;
+}
+
+.eval-metrics span {
+  display: block;
+  color: var(--subtle);
+  font-size: 11px;
+}
+
+.eval-metrics strong {
+  display: block;
+  margin-top: 4px;
+  color: var(--text);
+  font-family: "Segoe UI Mono", Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.tool-spec-grid {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tool-spec-item {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 9px;
+  background: #101316;
+}
+
+.tool-spec-item summary {
+  cursor: pointer;
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Prompt 模板内容：保持换行和等宽字体，便于面试时逐条讲规则。 */
+.prompt-template {
+  margin: 10px 0 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  color: #cfe5d9;
+  background: #101316;
+  font-family: "Segoe UI Mono", Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.prompt-item summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.prompt-item summary::-webkit-details-marker {
+  display: none;
 }
 
 /* Trace 节点装饰：用小圆点突出工具调用时间线。 */
@@ -619,6 +853,85 @@ textarea:focus {
   transform: translateY(0);
 }
 
+.trace-detail-shell {
+  display: grid;
+  gap: 14px;
+  width: min(1460px, 100%);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.trace-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.trace-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.trace-detail-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.trace-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(360px, 0.85fr) minmax(460px, 1.15fr);
+  gap: 12px;
+}
+
+.trace-detail-panel {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 520px;
+}
+
+.sources-panel {
+  grid-column: 1 / -1;
+  min-height: 300px;
+}
+
+.trace-detail-list {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+}
+
+.trace-json {
+  margin-top: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #101316;
+}
+
+.trace-json summary {
+  cursor: pointer;
+  padding: 9px 11px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.trace-json pre {
+  margin: 0;
+  overflow: auto;
+  border-top: 1px solid var(--line);
+  padding: 11px;
+  color: #cfe5d9;
+  font-family: "Segoe UI Mono", Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
 /* 无障碍动效偏好：用户选择减少动画时关闭 Toast 过渡。 */
 @media (prefers-reduced-motion: reduce) {
   .toast {
@@ -628,14 +941,14 @@ textarea:focus {
 
 /* 中等屏幕布局：两列展示，工单面板下沉到第二行。 */
 @media (max-width: 1180px) {
-  .grid {
-    grid-template-columns: minmax(340px, 1fr) minmax(320px, 0.9fr);
-    grid-template-rows: minmax(420px, 1fr) 320px 360px;
+  .demo-board,
+  .metrics-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .ticket-panel {
-    grid-column: 1 / span 2;
-    grid-row: 3;
+  .grid {
+    grid-template-columns: minmax(340px, 1fr) minmax(320px, 0.9fr);
+    grid-template-rows: minmax(0, 1fr);
   }
 }
 
@@ -643,6 +956,8 @@ textarea:focus {
 @media (max-width: 780px) {
   .app-shell {
     grid-template-columns: 1fr;
+    height: auto;
+    min-height: 100vh;
   }
 
   .sidebar {
@@ -666,11 +981,15 @@ textarea:focus {
   }
 
   .workspace {
+    height: auto;
+    min-height: 100vh;
     padding: 16px;
   }
 
   .topbar,
-  .control-strip {
+  .control-strip,
+  .demo-board,
+  .metrics-strip {
     grid-template-columns: 1fr;
     align-items: stretch;
   }
@@ -688,6 +1007,7 @@ textarea:focus {
   .grid {
     grid-template-columns: 1fr;
     grid-template-rows: auto;
+    flex: none;
   }
 
   .chat-panel,
@@ -696,6 +1016,8 @@ textarea:focus {
   .grid[data-view="tickets"] .ticket-panel,
   .grid[data-view="knowledge"] .insight-panel,
   .grid[data-view="knowledge"] .knowledge-panel,
+  .grid[data-view="prompts"] .insight-panel,
+  .grid[data-view="prompts"] .prompt-panel,
   .grid[data-view="evals"] .insight-panel,
   .grid[data-view="evals"] .eval-panel {
     grid-column: auto;
@@ -712,5 +1034,24 @@ textarea:focus {
 
   .ticket-actions {
     grid-template-columns: 1fr;
+  }
+
+  .eval-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .trace-detail-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .trace-detail-summary,
+  .trace-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-card.wide,
+  .sources-panel {
+    grid-column: auto;
   }
 }

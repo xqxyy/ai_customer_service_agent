@@ -47,6 +47,30 @@ def _format_datetime(value):
     return value.isoformat()
 
 
+# 把 AgentRun ORM 对象转成接口统一返回结构，避免详情页和列表页字段不一致。
+def _serialize_agent_run(row: AgentRun) -> dict:
+    return {
+        "id": row.id,
+        "run_id": row.run_id,
+        "session_id": row.session_id,
+        "user_id": row.user_id,
+        "input": row.input,
+        "output": row.output,
+        "status": row.status,
+        "error": row.error,
+        "model_name": row.model_name,
+        "model_provider": row.model_provider,
+        "duration_ms": row.duration_ms,
+        "failure_type": row.failure_type,
+        "rag_hit": row.rag_hit,
+        "rag_top_score": row.rag_top_score,
+        "tool_count": row.tool_count,
+        "ticket_created": row.ticket_created,
+        "started_at": _format_datetime(row.started_at),
+        "ended_at": _format_datetime(row.ended_at),
+    }
+
+
 # 初始化数据库入口；当前项目建表由 Alembic 管理，这里只做健康检查
 def init_db():
     return check_database_health()
@@ -128,18 +152,19 @@ def get_agent_run(run_id: str) -> dict | None:
     if row is None:
         return None
 
-    return {
-        "id": row.id,
-        "run_id": row.run_id,
-        "session_id": row.session_id,
-        "user_id": row.user_id,
-        "input": row.input,
-        "output": row.output,
-        "status": row.status,
-        "error": row.error,
-        "started_at": _format_datetime(row.started_at),
-        "ended_at": _format_datetime(row.ended_at),
-    }
+    return _serialize_agent_run(row)
+
+
+# 查询最近 Agent 执行记录：给工作台展示每次请求的输入、输出和状态，方便面试演示 Trace
+def list_agent_runs(limit: int = 20) -> list[dict]:
+    with SessionLocal() as db:
+        rows = db.execute(
+            select(AgentRun)
+            .order_by(AgentRun.id.desc())
+            .limit(limit)
+        ).scalars().all()
+
+    return [_serialize_agent_run(row) for row in rows]
 
 
 # 按 run_id 查询本次请求保存的用户消息和 AI 回复
@@ -286,6 +311,14 @@ def save_agent_run(
     error,
     started_at,
     ended_at,
+    model_name: str | None = None,
+    model_provider: str | None = None,
+    duration_ms: int | None = None,
+    failure_type: str | None = None,
+    rag_hit: bool | None = None,
+    rag_top_score: float | None = None,
+    tool_count: int = 0,
+    ticket_created: bool = False,
 ):
     with SessionLocal() as db:
         db.add(
@@ -297,6 +330,14 @@ def save_agent_run(
                 output=output_text,
                 status=status,
                 error=error,
+                model_name=model_name,
+                model_provider=model_provider,
+                duration_ms=duration_ms,
+                failure_type=failure_type,
+                rag_hit=rag_hit,
+                rag_top_score=rag_top_score,
+                tool_count=tool_count,
+                ticket_created=ticket_created,
                 started_at=_to_datetime(started_at),
                 ended_at=_to_datetime(ended_at),
             )

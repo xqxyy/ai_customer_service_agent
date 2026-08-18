@@ -15,6 +15,7 @@
         <button class="nav-button active" data-view="conversation" title="会话">会话</button>
         <button class="nav-button" data-view="tickets" title="工单">工单</button>
         <button class="nav-button" data-view="knowledge" title="知识库">知识库</button>
+        <button class="nav-button" data-view="prompts" title="Prompt">Prompt</button>
         <button class="nav-button" data-view="evals" title="评估">评估</button>
       </aside>
 
@@ -24,7 +25,7 @@
         <header class="topbar">
           <div>
             <p class="eyebrow">Customer service agent</p>
-            <h1>智能客服工作台</h1>
+            <h1>智能客服演示工作台</h1>
           </div>
           <div class="topbar-actions">
             <span class="status-pill" id="apiStatus">API 检查中</span>
@@ -37,7 +38,7 @@
         <section class="control-strip" aria-label="会话设置">
           <label>
             <span>Session</span>
-            <input id="sessionId" value="demo_session" />
+            <input id="sessionId" value="demo_showcase" />
           </label>
           <label>
             <span>User</span>
@@ -47,7 +48,57 @@
             <button data-question="退款一般多久到账？">退款到账</button>
             <button data-question="我的订单到哪了？">订单物流</button>
             <button data-question="我要投诉并要求赔偿">人工审核</button>
+            <button id="newSessionButton" type="button">新会话</button>
           </div>
+        </section>
+
+        <!-- 演示场景区：面试时可以按卡片顺序展示 RAG、工具调用和高风险转人工。 -->
+        <section class="demo-board" aria-label="面试演示场景">
+          <article class="scenario-card">
+            <div>
+              <p class="panel-kicker">Demo 01</p>
+              <h2>政策问答 + 来源追踪</h2>
+            </div>
+            <button data-question="退款多久到账？">填入问题</button>
+          </article>
+          <article class="scenario-card">
+            <div>
+              <p class="panel-kicker">Demo 02</p>
+              <h2>订单/客户工具调用</h2>
+            </div>
+            <button data-question="帮我查一下最近订单状态和会员信息">填入问题</button>
+          </article>
+          <article class="scenario-card risk">
+            <div>
+              <p class="panel-kicker">Demo 03</p>
+              <h2>高风险转人工</h2>
+            </div>
+            <button data-question="我要投诉并要求赔偿，账号也异常了">填入问题</button>
+          </article>
+        </section>
+
+        <!-- 运行指标区：把面试官最关心的可运行、可观测、可评估结果放在首屏。 -->
+        <section class="metrics-strip" aria-label="运行指标">
+          <article class="metric-card">
+            <span>Agent Runs</span>
+            <strong id="metricRuns">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>最近消息</span>
+            <strong id="metricMessages">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>待审核工单</span>
+            <strong id="metricPendingTickets">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>知识库文档</span>
+            <strong id="metricDocuments">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>RAG Top3</span>
+            <strong id="metricRagTop3">-</strong>
+          </article>
         </section>
 
         <!-- 内容网格：各面板通过 data-panel 标识，CSS 根据 data-view 控制显示方式。 -->
@@ -59,7 +110,10 @@
                 <p class="panel-kicker">Chat</p>
                 <h2>聊天窗口</h2>
               </div>
-              <button class="ghost-button" id="refreshButton">刷新</button>
+              <div class="panel-actions">
+                <span class="count-badge" id="chatCount">0</span>
+                <button class="ghost-button" id="refreshButton">刷新</button>
+              </div>
             </div>
 
             <div class="chat-stream" id="chatStream"></div>
@@ -87,6 +141,7 @@
               </div>
               <span class="count-badge" id="toolCount">0</span>
             </div>
+            <div class="run-summary" id="runSummary"></div>
             <div class="trace-list" id="traceList"></div>
           </section>
 
@@ -114,6 +169,18 @@
             <div class="ticket-list" id="ticketList"></div>
           </section>
 
+          <!-- Prompt 面板：展示 Agent 的可复用提示词模板和工程化拆分方式。 -->
+          <section class="panel prompt-panel" data-panel="prompts" aria-label="Prompt 模板">
+            <div class="panel-header">
+              <div>
+                <p class="panel-kicker">Prompt Engineering</p>
+                <h2>Prompt 模板</h2>
+              </div>
+              <span class="count-badge" id="promptCount">0</span>
+            </div>
+            <div class="prompt-list" id="promptList"></div>
+          </section>
+
           <!-- 评估面板：给出 Agent 评估脚本入口和当前评估维度。 -->
           <section class="panel eval-panel" data-panel="evals" aria-label="评估面板">
             <div class="panel-header">
@@ -121,18 +188,22 @@
                 <p class="panel-kicker">Eval</p>
                 <h2>评估与观测</h2>
               </div>
-              <span class="count-badge">3 cases</span>
+              <span class="count-badge" id="evalCaseCount">RAG cases</span>
             </div>
             <div class="eval-body">
+              <div class="eval-report-list" id="evalReportList"></div>
+              <div class="eval-report-list" id="toolSpecList"></div>
               <article class="eval-card">
                 <p class="item-title">评估命令</p>
-                <pre>python -m backend.app.evals.run_customer_service_eval</pre>
+                <pre>python -m scripts.run_rag_eval
+python -m backend.app.evals.run_customer_service_eval</pre>
               </article>
               <article class="eval-card">
                 <p class="item-title">当前评估维度</p>
                 <ul>
+                  <li>RAG Top3 命中率</li>
                   <li>工具调用是否正确</li>
-                  <li>RAG 来源是否命中</li>
+                  <li>高风险是否转人工</li>
                   <li>最终状态是否符合预期</li>
                 </ul>
               </article>

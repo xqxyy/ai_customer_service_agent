@@ -50,3 +50,6 @@ data/generated/*
 !data/generated/README.md
 data/public_samples/*
 !data/public_samples/README.md
+
+# 本地评估运行报告包含生成时间和本机路径，按脚本复现，不直接提交。
+data/processed/*_eval_report.json

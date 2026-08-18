@@ -22,6 +22,7 @@ from backend.app.db.session import (
     save_message_sources,
     save_tool_call,
 )
+from backend.app.prompts import CUSTOMER_SERVICE_AGENT_SYSTEM_PROMPT
 from backend.app.schemas.chat import ChatRequest, ChatResponse
 from backend.app.services.risk_service import detect_risk
 from backend.app.tools.customer_tools import get_customer_info
@@ -43,43 +44,16 @@ tools = [
 ]
 
 
-# 系统提示词：约束客服 Agent 的角色、工具选择规则、RAG 无答案和高风险处理方式。
-system_prompt = """
-你是一个 AI 智能客服 Agent。
-
-你的任务：
-你可以根据用户问题自主选择合适工具：
-- 涉及用户资料时，查询客户信息。
-- 涉及订单或物流时，查询订单。
-- 涉及政策、退款、售后规则时，查询知识库。
-- 涉及投诉、赔偿、账号异常、人工处理时，创建工单，并将 priority 和 risk_level 设置为 high。
-
-不要编造工具中没有的信息。
-回答要简洁、明确、礼貌。
-
-如果 search_knowledge_base 返回 found=false，
-你不能编造政策答案。
-你应该说明当前知识库没有找到明确依据，
-并根据问题性质选择拒答或创建人工工单。
-
-如果 search_knowledge_base 返回 unavailable=true 或 status=unavailable，
-说明知识库服务暂时不可用。
-你应该明确告知用户当前知识库暂时不可用，不能编造答案；
-如果问题紧急或高风险，创建人工审核工单。
-
-如果知识库没有找到明确依据，不要编造答案。
-如果不是高风险问题，返回无法确认的说明。
-如果是高风险问题，创建人工审核工单。
-"""
-
-
 # 客服 Agent 类：封装一次 /chat 请求从输入到回复的完整执行流程
 class CustomerServiceAgent:
     # 初始化模型和 LangChain Agent；应用启动时创建一次，避免每个请求重复初始化
     def __init__(self):
+        self.model_name = "deepseek-v4-flash"
+        self.model_provider = "deepseek"
+
         model = init_chat_model(
-            model="deepseek-v4-flash",
-            model_provider="deepseek",
+            model=self.model_name,
+            model_provider=self.model_provider,
             api_key=settings.deepseek_api_key,
             base_url=settings.deepseek_base_url,
             timeout=60,
@@ -89,7 +63,7 @@ class CustomerServiceAgent:
         self.agent = create_agent(
             model=model,
             tools=tools,
-            system_prompt=system_prompt,
+            system_prompt=CUSTOMER_SERVICE_AGENT_SYSTEM_PROMPT,
         )
 
     # 执行一次客服对话：保存消息、前置风险检查、调用 Agent、保存 Trace 并返回响应
@@ -144,16 +118,15 @@ class CustomerServiceAgent:
                 ended_at = datetime.now().isoformat()
 
                 #保存一次完整 Agent 执行记录到 agent_runs 表
-                save_agent_run(
+                self._save_agent_run_record(
                     run_id=run_id,
-                    session_id=request.session_id,
-                    user_id=request.user_id,
-                    input_text=request.message,
-                    output_text=answer,
+                    request=request,
+                    answer=answer,
                     status=status,
                     error=None,
                     started_at=started_at,
                     ended_at=ended_at,
+                    trace=precheck_trace,
                 )
 
                 return ChatResponse(
@@ -197,16 +170,15 @@ class CustomerServiceAgent:
 
             ended_at = datetime.now().isoformat()
 
-            save_agent_run(
+            self._save_agent_run_record(
                 run_id=run_id,
-                session_id=request.session_id,
-                user_id=request.user_id,
-                input_text=request.message,
-                output_text=answer,
+                request=request,
+                answer=answer,
                 status=status,
                 error=None,
                 started_at=started_at,
                 ended_at=ended_at,
+                trace=trace,
             )
 
             return ChatResponse(
@@ -220,16 +192,16 @@ class CustomerServiceAgent:
         except Exception as error:
             ended_at = datetime.now().isoformat()
 
-            save_agent_run(
+            self._save_agent_run_record(
                 run_id=run_id,
-                session_id=request.session_id,
-                user_id=request.user_id,
-                input_text=request.message,
-                output_text=None,
+                request=request,
+                answer=None,
                 status="failed",
                 error=str(error),
                 started_at=started_at,
                 ended_at=ended_at,
+                trace={"tool_calls": [], "sources": []},
+                failure_type="model_error",
             )
             raise
 
@@ -303,12 +275,26 @@ class CustomerServiceAgent:
         try:
             parsed = json.loads(content)
         except json.JSONDecodeError:
-            return {"raw": content}
+            return {
+                "ok": False,
+                "status": "parse_error",
+                "error_code": "model_parse_error",
+                "error": "model_parse_error",
+                "message": "工具返回不是合法 JSON。",
+                "raw": content,
+            }
 
         if isinstance(parsed, dict):
             return parsed
 
-        return {"raw": parsed}
+        return {
+            "ok": False,
+            "status": "parse_error",
+            "error_code": "model_parse_error",
+            "error": "model_parse_error",
+            "message": "工具返回不是 JSON 对象。",
+            "raw": parsed,
+        }
 
     # 从知识库工具结果里提取引用来源：最终进入 ChatResponse.sources 和 message_sources 表
     def _extract_sources(self, tool_calls: list[dict]) -> list[dict]:
@@ -348,13 +334,16 @@ class CustomerServiceAgent:
     def _save_tool_call_logs(self, run_id, session_id: str, trace: dict):
         for tool_call in trace.get("tool_calls", []):
             result = tool_call.get("result", {})
-            error = result.get("error") if isinstance(result, dict) else None
-            status = "failed" if error else "success"
+            error = None
+            status = "success"
             started_at = tool_call.get("started_at")
             ended_at = tool_call.get("ended_at")
             duration_ms = tool_call.get("duration_ms")
 
             if isinstance(result, dict):
+                error = result.get("error_code") or result.get("error") or None
+                error = error or None
+                status = result.get("status") or ("failed" if error else "success")
                 started_at = started_at or result.get("started_at")
                 ended_at = ended_at or result.get("ended_at")
                 duration_ms = (
@@ -380,7 +369,10 @@ class CustomerServiceAgent:
     def _infer_status(self, trace: dict) -> str:
         for tool_call in trace.get("tool_calls", []):
             if tool_call.get("name") == "create_ticket":
-                ticket = tool_call.get("result", {}).get("ticket", {})
+                result = tool_call.get("result", {})
+                if isinstance(result, dict) and result.get("ok") is False:
+                    return result.get("status") or "tool_error"
+                ticket = result.get("ticket", {}) if isinstance(result, dict) else {}
                 return ticket.get("status", "ticket_created")
 
         for tool_call in trace.get("tool_calls", []):
@@ -392,6 +384,132 @@ class CustomerServiceAgent:
                     return "no_answer"
 
         return "answered"
+
+    # 保存 Agent run 主记录：把 Trace 中可复盘的观测指标沉淀到 agent_runs 表。
+    def _save_agent_run_record(
+        self,
+        run_id: str,
+        request: ChatRequest,
+        answer: str | None,
+        status: str,
+        error: str | None,
+        started_at: str,
+        ended_at: str,
+        trace: dict,
+        failure_type: str | None = None,
+    ):
+        observability = self._build_run_observability(
+            trace=trace,
+            status=status,
+            started_at=started_at,
+            ended_at=ended_at,
+            failure_type=failure_type,
+            error=error,
+        )
+
+        save_agent_run(
+            run_id=run_id,
+            session_id=request.session_id,
+            user_id=request.user_id,
+            input_text=request.message,
+            output_text=answer,
+            status=status,
+            error=error,
+            started_at=started_at,
+            ended_at=ended_at,
+            model_name=self.model_name,
+            model_provider=self.model_provider,
+            **observability,
+        )
+
+    # 从 Trace 推导本次 run 的 RAG、工具、工单和失败类型指标。
+    def _build_run_observability(
+        self,
+        trace: dict,
+        status: str,
+        started_at: str,
+        ended_at: str,
+        failure_type: str | None = None,
+        error: str | None = None,
+    ) -> dict:
+        tool_calls = trace.get("tool_calls", [])
+        rag_hit = None
+        rag_top_score = None
+        ticket_created = False
+
+        for tool_call in tool_calls:
+            name = tool_call.get("name")
+            result = tool_call.get("result", {})
+
+            if name == "create_ticket" and isinstance(result, dict):
+                ticket_created = bool(result.get("created") or result.get("ticket"))
+
+            if name != "search_knowledge_base" or not isinstance(result, dict):
+                continue
+
+            found = result.get("found")
+            if found is True:
+                rag_hit = True
+            elif rag_hit is None and found is False:
+                rag_hit = False
+
+            for doc in result.get("results", []):
+                score = doc.get("score")
+                if score is None:
+                    continue
+                score = float(score)
+                if rag_top_score is None or score > rag_top_score:
+                    rag_top_score = score
+
+        return {
+            "duration_ms": self._duration_ms(started_at, ended_at),
+            "failure_type": failure_type or self._infer_failure_type(status, trace, error),
+            "rag_hit": rag_hit,
+            "rag_top_score": rag_top_score,
+            "tool_count": len(tool_calls),
+            "ticket_created": ticket_created,
+        }
+
+    # 按状态和工具结果归类失败/兜底类型，方便复盘和面试讲解。
+    def _infer_failure_type(self, status: str, trace: dict, error: str | None) -> str | None:
+        if error:
+            return "model_error"
+
+        for tool_call in trace.get("tool_calls", []):
+            result = tool_call.get("result", {})
+            if not isinstance(result, dict):
+                continue
+
+            error_code = result.get("error_code") or result.get("error")
+            if not error_code:
+                continue
+
+            if error_code == "rag_unavailable":
+                return "rag_unavailable"
+            if error_code == "model_parse_error":
+                return "model_parse_error"
+            return "tool_error"
+
+        if status == "pending_review":
+            return "high_risk_review"
+        if status == "no_answer":
+            return "rag_no_hit"
+        if status == "rag_unavailable":
+            return "rag_unavailable"
+        if status == "failed":
+            return "model_error"
+
+        return None
+
+    # 计算一次 run 总耗时；遇到异常时间格式时返回 None，不影响主流程。
+    def _duration_ms(self, started_at: str, ended_at: str) -> int | None:
+        try:
+            started = datetime.fromisoformat(started_at)
+            ended = datetime.fromisoformat(ended_at)
+        except ValueError:
+            return None
+
+        return int((ended - started).total_seconds() * 1000)
 
     # 高风险人工审核兜底：规则命中且 Agent 没有创建工单时，强制创建 pending_review 工单。
     def _create_high_risk_ticket_if_needed(
